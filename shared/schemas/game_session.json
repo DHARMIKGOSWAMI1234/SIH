@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GameSession",
+  "type": "object",
+  "properties": {
+    "localId": { "type": "string", "format": "uuid" },
+    "serverId": { "type": ["string", "null"] },
+    "gameType": { "type": "string", "enum": ["memory_match", "pattern_recognition", "routine_recall"] },
+    "score": { "type": "integer", "minimum": 0 },
+    "accuracy": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+    "mistakes": { "type": "integer", "minimum": 0 },
+    "responseTimeMs": { "type": "number", "minimum": 0.0 },
+    "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "hintCount": { "type": "integer", "minimum": 0 },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": "string", "format": "date-time" },
+    "syncStatus": { "type": "string", "enum": ["pending", "syncing", "synced", "failed", "conflict"] }
+  },
+  "required": [
+    "localId",
+    "gameType",
+    "score",
+    "accuracy",
+    "mistakes",
+    "responseTimeMs",
+    "difficulty",
+    "hintCount",
+    "startedAt",
+    "completedAt",
+    "syncStatus"
+  ]
+}

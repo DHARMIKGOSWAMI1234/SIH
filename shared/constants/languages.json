@@ -1,0 +1,58 @@
+{
+  "supported_languages": [
+    {
+      "code": "en",
+      "name": "English",
+      "native": "English",
+      "status": "implemented"
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "native": "हिन्दी",
+      "status": "implemented"
+    },
+    {
+      "code": "as",
+      "name": "Assamese",
+      "native": "অসমীয়া",
+      "status": "implemented"
+    },
+    {
+      "code": "bn",
+      "name": "Bengali",
+      "native": "বাংলা",
+      "status": "planned"
+    },
+    {
+      "code": "mni",
+      "name": "Manipuri / Meitei",
+      "native": "মৈতৈলোন্",
+      "status": "planned"
+    },
+    {
+      "code": "brx",
+      "name": "Bodo",
+      "native": "बर'",
+      "status": "planned"
+    },
+    {
+      "code": "lus",
+      "name": "Mizo",
+      "native": "Mizo ṭawng",
+      "status": "planned"
+    },
+    {
+      "code": "kha",
+      "name": "Khasi",
+      "native": "Ka Ktien Khasi",
+      "status": "planned"
+    },
+    {
+      "code": "grt",
+      "name": "Garo",
+      "native": "A·chik",
+      "status": "planned"
+    }
+  ]
+}

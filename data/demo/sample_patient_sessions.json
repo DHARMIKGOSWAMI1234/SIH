@@ -1,0 +1,41 @@
+[
+  {
+    "localId": "demo-session-001",
+    "gameType": "memory_match",
+    "score": 100,
+    "accuracy": 0.92,
+    "mistakes": 1,
+    "responseTimeMs": 3400.0,
+    "difficulty": 1,
+    "hintCount": 0,
+    "startedAt": "2026-09-10T09:00:00Z",
+    "completedAt": "2026-09-10T09:04:30Z",
+    "syncStatus": "synced"
+  },
+  {
+    "localId": "demo-session-002",
+    "gameType": "routine_recall",
+    "score": 85,
+    "accuracy": 0.88,
+    "mistakes": 1,
+    "responseTimeMs": 4200.0,
+    "difficulty": 1,
+    "hintCount": 1,
+    "startedAt": "2026-09-10T16:00:00Z",
+    "completedAt": "2026-09-10T16:06:15Z",
+    "syncStatus": "synced"
+  },
+  {
+    "localId": "demo-session-003",
+    "gameType": "pattern_recognition",
+    "score": 95,
+    "accuracy": 0.90,
+    "mistakes": 1,
+    "responseTimeMs": 3100.0,
+    "difficulty": 2,
+    "hintCount": 0,
+    "startedAt": "2026-09-11T10:15:00Z",
+    "completedAt": "2026-09-11T10:19:40Z",
+    "syncStatus": "pending"
+  }
+]
