@@ -140,7 +140,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
-      expect(find.text('How to Use SMRITI'), findsOneWidget);
+      expect(find.text('How to Use BANDHU'), findsOneWidget);
     });
 
     testWidgets('GamesScreen does not overflow on 320dp', (tester) async {

@@ -76,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               const SizedBox(height: 32.0),
               const Text(
-                'SMRITI',
+                'BANDHU',
                 style: TextStyle(
                   fontSize: 38.0,
                   fontWeight: FontWeight.bold,

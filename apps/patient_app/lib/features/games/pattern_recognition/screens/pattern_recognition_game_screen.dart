@@ -12,6 +12,13 @@ import '../models/pattern_recognition_state.dart';
 import '../widgets/pattern_sequence_display.dart';
 import '../widgets/pattern_option_button.dart';
 import 'pattern_recognition_result_screen.dart';
+import '../../../help/models/help_screen_id.dart';
+import '../../../help/services/stuck_detection_service.dart';
+import '../../../help/services/help_context_service.dart';
+import '../../../help/widgets/gentle_help_prompt.dart';
+import '../../../help/widgets/bandhu_help_sheet.dart';
+import '../../models/game_model.dart';
+import '../../models/game_context.dart';
 
 /// Full interactive gameplay screen for Pattern Recognition.
 /// Offline-first, responsive, accessible, and non-clinical.
@@ -51,6 +58,8 @@ class _PatternRecognitionGameScreenState
   late DateTime _roundStartedAt;
   Timer? _advanceTimer;
 
+  final StuckDetectionService _stuckService = StuckDetectionService();
+
   @override
   void initState() {
     super.initState();
@@ -62,11 +71,20 @@ class _PatternRecognitionGameScreenState
       difficultyLevel: widget.difficulty.levelNumber,
       difficulty: widget.difficulty,
     );
+    _stuckService.recordGameStarted();
+    _stuckService.shouldShowPrompt.addListener(_onStuckPromptChanged);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateHelpContext());
+  }
+
+  void _onStuckPromptChanged() {
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
     _advanceTimer?.cancel();
+    _stuckService.shouldShowPrompt.removeListener(_onStuckPromptChanged);
+    _stuckService.dispose();
     super.dispose();
   }
 
@@ -85,6 +103,7 @@ class _PatternRecognitionGameScreenState
       return;
     }
 
+    _stuckService.recordUserAction();
     final loc = _getLocale(context);
 
     setState(() {
@@ -93,6 +112,7 @@ class _PatternRecognitionGameScreenState
 
     if (option == _currentQuestion.correctAnswer) {
       // Correct Match
+      _stuckService.recordProgress();
       final answerSelectedAt = DateTime.now();
       final responseTimeMs = answerSelectedAt
           .difference(_roundStartedAt)
@@ -119,6 +139,7 @@ class _PatternRecognitionGameScreenState
         _isFeedbackCorrect = true;
         _feedbackMessage = AppStrings.get('wellDonePattern', locale: loc);
       });
+      _updateHelpContext();
 
       _advanceTimer = Timer(const Duration(milliseconds: 1400), () {
         if (!mounted) return;
@@ -126,6 +147,7 @@ class _PatternRecognitionGameScreenState
       });
     } else {
       // Gentle Supportive Mismatch
+      _stuckService.recordMistake();
       setState(() {
         _mistakeCount++;
         _roundMistakes++;
@@ -134,6 +156,7 @@ class _PatternRecognitionGameScreenState
         // Dim the mistaken option so the user can choose again comfortably
         _eliminatedOptions.add(option);
       });
+      _updateHelpContext();
     }
   }
 
@@ -150,12 +173,15 @@ class _PatternRecognitionGameScreenState
         _roundHints = 0;
         _roundStartedAt = DateTime.now();
       });
+      _updateHelpContext();
     } else {
       _finishGame();
     }
   }
 
   void _finishGame() {
+    _stuckService.recordGameCompleted();
+    _updateHelpContext();
     final completedAt = DateTime.now();
     final metrics = PatternRecognitionMetrics.calculate(
       difficulty: widget.difficulty,
@@ -179,6 +205,7 @@ class _PatternRecognitionGameScreenState
 
   void _useHint() {
     if (_isTurnLocked) return;
+    _stuckService.recordUserAction();
 
     final incorrectRemaining = _currentQuestion.options
         .where((opt) =>
@@ -215,6 +242,45 @@ class _PatternRecognitionGameScreenState
         _isFeedbackCorrect = true;
       });
     }
+    _updateHelpContext();
+  }
+
+  GameContext _buildGameContext() {
+    final question = _currentQuestion;
+    final patternHint = PatternGameHint(
+      patternType: question.patternType,
+      patternRuleDescription: question.patternRuleDescription,
+      sequenceSummary: question.sequence.map((item) => item.label).join(', '),
+      questionPrompt: 'What comes next in the sequence?',
+    );
+
+    final progress = _questions.isNotEmpty
+        ? (_currentIndex / _questions.length).clamp(0.0, 1.0)
+        : 0.0;
+
+    return GameContext(
+      gameType: CognitiveGameType.patternRecognition,
+      gamePhase: _isTurnLocked ? 'answering' : 'playing',
+      difficulty: widget.difficulty.levelNumber,
+      score: _correctCount * 10,
+      mistakes: _mistakeCount,
+      hintsUsed: _hintCount,
+      elapsedTime: DateTime.now().difference(_startedAt),
+      progress: progress,
+      isActive: !_isAnswerRevealed,
+      isComplete: _currentIndex >= _questions.length - 1 && _isAnswerRevealed,
+      availableHints: 3,
+      patternHint: patternHint,
+    );
+  }
+
+  void _updateHelpContext() {
+    if (!mounted) return;
+    final gameContext = _buildGameContext();
+    HelpContextService.instance.updateFromScreenId(
+      HelpScreenId.patternRecognition,
+      gameContext: gameContext,
+    );
   }
 
   void _showPauseDialog() {
@@ -300,6 +366,7 @@ class _PatternRecognitionGameScreenState
 
     return SmritiScaffold(
       title: AppStrings.get('patternGame', locale: loc),
+      helpScreenId: HelpScreenId.patternRecognition,
       actions: [
         IconButton(
           icon: Icon(
@@ -375,6 +442,20 @@ class _PatternRecognitionGameScreenState
             ],
           ),
           const SizedBox(height: 20.0),
+
+          // Gentle Help Prompt (Non-intrusive stuck assistance)
+          if (_stuckService.shouldShowPrompt.value && !_isTurnLocked) ...[
+            GentleHelpPrompt(
+              onHelpMe: () {
+                _stuckService.dismiss();
+                BandhuHelpSheet.show(context);
+              },
+              onNotNow: () {
+                _stuckService.dismiss();
+              },
+            ),
+            const SizedBox(height: 12.0),
+          ],
 
           // Sequence Display
           PatternSequenceDisplay(

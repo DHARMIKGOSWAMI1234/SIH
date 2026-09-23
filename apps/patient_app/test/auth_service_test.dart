@@ -153,7 +153,7 @@ void main() {
       expect(success, isFalse);
       expect(offlineAuthService.isAuthenticated, isFalse);
       expect(offlineAuthService.session, isNull);
-      expect(offlineAuthService.errorMessage, 'Internet is required to create a new SMRITI account.');
+      expect(offlineAuthService.errorMessage, 'Internet is required to create a new BANDHU account.');
     });
 
     test('SyncQueue and local records survive offline mode and session expiration', () async {

@@ -29,7 +29,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return SmritiScaffold(
-      title: 'Welcome to SMRITI',
+      title: 'Welcome to BANDHU',
       showBackButton: false,
       body: ListView(
         padding: const EdgeInsets.all(24.0),

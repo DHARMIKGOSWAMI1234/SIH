@@ -67,7 +67,7 @@ void main() {
     expect(find.text('Password'), findsOneWidget);
 
     // Verify primary action button with elderly-first touch target (>= 56dp)
-    final submitButton = find.widgetWithText(ElevatedButton, 'Sign In to SMRITI');
+    final submitButton = find.widgetWithText(ElevatedButton, 'Sign In to BANDHU');
     expect(submitButton, findsOneWidget);
     final size = tester.getSize(submitButton);
     expect(size.height, greaterThanOrEqualTo(56.0), reason: 'Submit button must meet elderly touch target >= 56dp');
@@ -90,7 +90,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
-      expect(find.text('Sign In to SMRITI'), findsOneWidget);
+      expect(find.text('Sign In to BANDHU'), findsOneWidget);
     });
 
     testWidgets('LoginScreen in New Patient mode renders with zero overflow at ${width.toInt()}dp', (tester) async {

@@ -105,22 +105,113 @@ class HomeScreen extends StatelessWidget {
 
         const SizedBox(height: 24.0),
 
-        // 2. TODAY: Next Activity / Reminder
+        // 2. TODAY: Next Activity
         SmritiSectionHeader(
           title: AppStrings.get('todaySectionTitle', locale: currentLocale),
           subtitle: AppStrings.get('todaySectionSubtitle', locale: currentLocale),
           icon: Icons.today_rounded,
         ),
         const SizedBox(height: 10.0),
-        SmritiActionCard(
-          title: AppStrings.get('nextActivityRoutine', locale: currentLocale),
-          subtitle: AppStrings.get('nextActivityRoutineDesc', locale: currentLocale),
-          icon: Icons.play_circle_filled_rounded,
-          iconColor: primaryColor,
-          iconBackgroundColor: iconBg,
-          backgroundColor: cardColor,
-          borderColor: primaryColor.withValues(alpha: 0.6),
-          onTap: () => _launchGame(context, CognitiveGameType.dailyRoutineRecall),
+        Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: cardColor,
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: primaryColor,
+              width: 2.0,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: primaryColor.withValues(alpha: isDark ? 0.2 : 0.08),
+                blurRadius: 12.0,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkSoftBlue : AppColors.lightPrimary.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Text(
+                      'NEXT ACTIVITY',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.8,
+                        color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    Icons.checklist_rounded,
+                    color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    size: 26.0,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12.0),
+              Text(
+                AppStrings.get('routineRecall', locale: currentLocale),
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary,
+                ),
+              ),
+              const SizedBox(height: 6.0),
+              Text(
+                'Arrange familiar daily steps in order.',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: textSecondary,
+                  height: 1.35,
+                ),
+              ),
+              const SizedBox(height: 4.0),
+              Text(
+                '3 gentle questions • at a comfortable pace',
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? AppColors.darkSoftGold : const Color(0xFF96732B),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: double.infinity,
+                height: 58.0,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                    foregroundColor: isDark ? AppColors.darkBackground : Colors.white,
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14.0),
+                    ),
+                  ),
+                  icon: const Icon(Icons.play_arrow_rounded, size: 28.0),
+                  label: Text(
+                    AppStrings.get('startExercise', locale: currentLocale),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.4,
+                    ),
+                  ),
+                  onPressed: () => _launchGame(context, CognitiveGameType.dailyRoutineRecall),
+                ),
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 24.0),

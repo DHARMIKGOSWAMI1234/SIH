@@ -43,4 +43,20 @@ class AppColors {
   static const Color warningOrange = Color(0xFFD97706);
   static const Color errorRed = Color(0xFFC2410C);
   static const Color darkError = errorRed;
+
+  // ---------------------------------------------------------------------------
+  // CONVENIENT COMPONENT ALIASES
+  // ---------------------------------------------------------------------------
+  static const Color primaryGreen = Color(0xFF2E6B4F); // Restorative Forest / Sage
+  static const Color warmCream = lightBackground;
+  static const Color warmGrey = lightTextSecondary;
+  static const Color accentGold = lightHighlight;
+  static const Color softBlue = lightPrimary;
+  static const Color terracotta = lightWarmAccent;
+  static const Color lightSurface = lightCard;
+  static const Color darkSurface = darkCard;
+  static const Color lightDivider = lightBorder;
+  static const Color darkDivider = darkBorder;
+  static const Color error = errorRed;
+  static const Color success = successGreen;
 }

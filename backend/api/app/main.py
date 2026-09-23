@@ -12,6 +12,7 @@ from backend.api.app.api.v1.sync import router as sync_router
 from backend.api.app.api.v1.memories import router as memories_router
 from backend.api.app.api.v1.caregivers import router as caregivers_router
 from backend.api.app.api.v1.analytics import router as analytics_router
+from backend.api.app.api.v1.patient_pairing import router as patient_pairing_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -56,6 +57,9 @@ app.include_router(sync_router, prefix=settings.API_V1_STR)
 app.include_router(memories_router, prefix=settings.API_V1_STR)
 app.include_router(caregivers_router, prefix=settings.API_V1_STR)
 app.include_router(analytics_router, prefix=settings.API_V1_STR)
+app.include_router(patient_pairing_router, prefix=settings.API_V1_STR)
+
+
 
 if __name__ == "__main__":
     import uvicorn

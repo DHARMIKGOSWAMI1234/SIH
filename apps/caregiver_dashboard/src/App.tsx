@@ -11,6 +11,8 @@ import { ReminderStatus } from './components/ReminderStatus';
 import { ObservedTrendsCard } from './components/ObservedTrendsCard';
 import { RecentSessionsTable } from './components/RecentSessionsTable';
 import { MemoryManager } from './components/MemoryManager';
+import { ConnectPatientModal } from './components/ConnectPatientModal';
+import { PatientCards } from './components/PatientCards';
 import {
   caregiverApi,
   PatientProfile,
@@ -55,7 +57,8 @@ const DashboardContent: React.FC = () => {
   const [sessions, setSessions] = useState<GameSessionRow[]>([]);
   const [remindersList, setRemindersList] = useState<ReminderItem[]>([]);
 
-  // Link Patient Modal State
+  // Link / Pairing Patient Modal State
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState<boolean>(false);
   const [isLinkModalOpen, setIsLinkModalOpen] = useState<boolean>(false);
   const [linkEmail, setLinkEmail] = useState<string>('');
   const [linkRelationship, setLinkRelationship] = useState<string>('Family Caregiver');
@@ -170,7 +173,7 @@ const DashboardContent: React.FC = () => {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-app)' }}>
         <div style={{ textAlign: 'center' }}>
           <HeartHandshake size={48} style={{ color: 'var(--color-sage)', animation: 'pulse 1.5s infinite', margin: '0 auto 16px' }} />
-          <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>Loading SMRITI Caregiver Portal...</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '16px' }}>Loading BANDHU Caregiver Portal...</p>
         </div>
       </div>
     );
@@ -195,7 +198,7 @@ const DashboardContent: React.FC = () => {
               </div>
             </div>
 
-            {patients.length === 0 && (
+            {patients.length === 0 ? (
               <div className="card" style={{ marginBottom: '24px', border: '1px dashed var(--color-sage)', background: 'var(--color-sage-light)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -210,14 +213,21 @@ const DashboardContent: React.FC = () => {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => setIsLinkModalOpen(true)}
+                    onClick={() => setIsConnectModalOpen(true)}
                     style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
                   >
                     <UserPlus size={16} />
-                    <span>{t('header.linkPatient')}</span>
+                    <span>+ Connect Patient</span>
                   </button>
                 </div>
               </div>
+            ) : (
+              <PatientCards
+                patients={patients}
+                selectedPatientId={selectedPatient}
+                onSelectPatient={handlePatientChange}
+                onConnectClick={() => setIsConnectModalOpen(true)}
+              />
             )}
 
             {/* Overview Page: 4 Metric Cards, Recent Cognitive Activity, Activity This Week */}
@@ -258,13 +268,22 @@ const DashboardContent: React.FC = () => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => setIsLinkModalOpen(true)}
+                onClick={() => setIsConnectModalOpen(true)}
                 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
               >
                 <UserPlus size={16} />
-                <span>Link New Patient</span>
+                <span>+ Connect Patient</span>
               </button>
             </div>
+
+            {patients.length > 0 && (
+              <PatientCards
+                patients={patients}
+                selectedPatientId={selectedPatient}
+                onSelectPatient={handlePatientChange}
+                onConnectClick={() => setIsConnectModalOpen(true)}
+              />
+            )}
 
             <div className="card">
               <div className="flex items-center gap-3 mb-4">
@@ -426,12 +445,12 @@ const DashboardContent: React.FC = () => {
               </div>
             </div>
 
-            {/* About SMRITI */}
+            {/* About BANDHU */}
             <div className="card mt-4">
-              <h3 className="section-title mb-2">About SMRITI</h3>
+              <h3 className="section-title mb-2">About BANDHU</h3>
               <p className="section-subtitle mb-2">Assistive Cognitive Health Companion</p>
               <p style={{ fontSize: '13.5px', color: 'var(--text-main)', lineHeight: 1.6, margin: 0 }}>
-                SMRITI empowers caregivers with non-intrusive transparency into cognitive exercises, routines, and reminiscence activities.
+                BANDHU empowers caregivers with non-intrusive transparency into cognitive exercises, routines, and reminiscence activities.
               </p>
             </div>
 
@@ -446,7 +465,7 @@ const DashboardContent: React.FC = () => {
                 <div>
                   <div className="banner-title">Non-Diagnostic Platform Policy</div>
                   <div className="banner-desc">
-                    SMRITI does not provide medical diagnoses, risk scores, or clinical severity assessments.
+                    BANDHU does not provide medical diagnoses, risk scores, or clinical severity assessments.
                     All recorded metrics reflect observed gameplay comfort, engagement consistency, and routine completion.
                   </div>
                 </div>
@@ -473,11 +492,24 @@ const DashboardContent: React.FC = () => {
         onPatientChange={handlePatientChange}
         caregiverName={user.full_name}
         patients={patients}
-        onLinkPatientClick={() => setIsLinkModalOpen(true)}
+        onLinkPatientClick={() => setIsConnectModalOpen(true)}
         onLogout={logout}
       >
         {renderContent()}
       </AppLayout>
+
+      {/* Modern QR / 4-Digit Code Pairing Modal */}
+      <ConnectPatientModal
+        isOpen={isConnectModalOpen}
+        onClose={() => setIsConnectModalOpen(false)}
+        onPatientConnected={async (newPatientId, _patientName) => {
+          await loadPatients();
+          if (newPatientId) {
+            setSelectedPatient(newPatientId);
+            loadAnalyticsData(newPatientId);
+          }
+        }}
+      />
 
       {/* Link Patient Modal */}
       {isLinkModalOpen && (

@@ -33,8 +33,33 @@ class ApiConfig {
       if (_useUsbReverse) {
         return 'http://localhost:8000';
       }
-      return 'http://10.0.2.2:8000';
+      // Prefer localhost:8000 if adb reverse active, fallback to host LAN IP
+      return 'http://localhost:8000';
     }
     return 'http://localhost:8000';
+  }
+
+  /// List of candidate backend URLs for auto-discovery and automatic fallback on physical devices.
+  static List<String> get candidateBaseUrls {
+    final list = <String>[];
+    if (runtimeBaseUrl != null && runtimeBaseUrl!.isNotEmpty) {
+      list.add(runtimeBaseUrl!);
+    }
+    if (_envBaseUrl.isNotEmpty) {
+      list.add(_envBaseUrl);
+    }
+    if (kIsWeb) {
+      list.add('http://localhost:8000');
+      return list;
+    }
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      list.add('http://localhost:8000');
+      list.add('http://192.168.1.136:8000');
+      list.add('http://10.0.2.2:8000');
+    } else {
+      list.add('http://localhost:8000');
+      list.add('http://192.168.1.136:8000');
+    }
+    return list;
   }
 }

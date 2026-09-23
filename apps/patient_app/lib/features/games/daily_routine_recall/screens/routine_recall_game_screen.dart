@@ -13,6 +13,13 @@ import '../models/routine_recall_state.dart';
 import '../widgets/routine_step_slot.dart';
 import '../widgets/routine_card_button.dart';
 import 'routine_recall_result_screen.dart';
+import '../../../help/models/help_screen_id.dart';
+import '../../../help/services/stuck_detection_service.dart';
+import '../../../help/services/help_context_service.dart';
+import '../../../help/widgets/gentle_help_prompt.dart';
+import '../../../help/widgets/bandhu_help_sheet.dart';
+import '../../models/game_model.dart';
+import '../../models/game_context.dart';
 
 /// Full interactive gameplay screen for Daily Routine Recall.
 /// Elderly-first, high-contrast, large touch targets, calm reassurance.
@@ -48,6 +55,8 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
   late DateTime _startedAt;
   Timer? _advanceTimer;
 
+  final StuckDetectionService _stuckService = StuckDetectionService();
+
   @override
   void initState() {
     super.initState();
@@ -56,11 +65,20 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
       count: widget.difficulty.questionCount,
       difficultyLevel: widget.difficulty.levelNumber,
     );
+    _stuckService.recordGameStarted();
+    _stuckService.shouldShowPrompt.addListener(_onStuckPromptChanged);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateHelpContext());
+  }
+
+  void _onStuckPromptChanged() {
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
     _advanceTimer?.cancel();
+    _stuckService.shouldShowPrompt.removeListener(_onStuckPromptChanged);
+    _stuckService.dispose();
     super.dispose();
   }
 
@@ -77,6 +95,8 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
       return;
     }
 
+    _stuckService.recordUserAction();
+
     setState(() {
       _userSequence.add(item);
       if (_highlightedItem == item) {
@@ -85,30 +105,39 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
       _isVerified = false;
       _feedbackMessage = null;
     });
+    _updateHelpContext();
   }
 
   void _onSlotRemoved(int index) {
     if (_isTurnLocked || index >= _userSequence.length) return;
+
+    _stuckService.recordUserAction();
 
     setState(() {
       _userSequence.removeAt(index);
       _isVerified = false;
       _feedbackMessage = null;
     });
+    _updateHelpContext();
   }
 
   void _clearSequence() {
     if (_isTurnLocked || _userSequence.isEmpty) return;
+
+    _stuckService.recordUserAction();
 
     setState(() {
       _userSequence.clear();
       _isVerified = false;
       _feedbackMessage = null;
     });
+    _updateHelpContext();
   }
 
   void _checkSequence() {
     if (_isTurnLocked || _userSequence.isEmpty) return;
+
+    _stuckService.recordUserAction();
 
     final target = _currentQuestion.correctSequence;
     bool isMatch = true;
@@ -126,6 +155,7 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
 
     if (isMatch) {
       // Correct sequence!
+      _stuckService.recordProgress();
       setState(() {
         _isTurnLocked = true;
         _isVerified = true;
@@ -133,6 +163,7 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
         _correctCount++;
         _feedbackMessage = AppStrings.get('wellDoneRoutine');
       });
+      _updateHelpContext();
 
       _advanceTimer = Timer(const Duration(milliseconds: 1500), () {
         if (!mounted) return;
@@ -140,12 +171,14 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
       });
     } else {
       // Gentle mismatch feedback
+      _stuckService.recordMistake();
       setState(() {
         _mistakeCount++;
         _isVerified = true;
         _isSequenceCorrect = false;
         _feedbackMessage = AppStrings.get('tryRoutineAgain');
       });
+      _updateHelpContext();
     }
   }
 
@@ -161,12 +194,15 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
         _isSequenceCorrect = false;
         _feedbackMessage = null;
       });
+      _updateHelpContext();
     } else {
       _finishGame();
     }
   }
 
   void _finishGame() {
+    _stuckService.recordGameCompleted();
+    _updateHelpContext();
     final completedAt = DateTime.now();
     final metrics = RoutineRecallMetrics.calculate(
       difficulty: widget.difficulty,
@@ -187,6 +223,7 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
 
   void _useHint() {
     if (_isTurnLocked) return;
+    _stuckService.recordUserAction();
 
     // Hint Step 1: Remove an incorrect distractor if present
     final remainingDistractors = _currentQuestion.distractors
@@ -201,6 +238,7 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
         _userSequence.remove(distractor);
         _feedbackMessage = AppStrings.get('hintRoutineDistractorHelp');
       });
+      _updateHelpContext();
       return;
     }
 
@@ -221,6 +259,52 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
         _feedbackMessage = 'All slots filled! Tap "Check Sequence" to submit.';
       });
     }
+    _updateHelpContext();
+  }
+
+  GameContext _buildGameContext() {
+    final question = _currentQuestion;
+    final routineHint = RoutineRecallGameHint(
+      routineCategory: 'Daily Activities',
+      routineTitle: question.title,
+      totalSteps: question.stepCount,
+      currentPlacedSteps: _userSequence.length,
+      placedStepLabels:
+          _userSequence.map((e) => e.getLocalizedLabel('en')).toList(),
+      lastPlacedStepLabel: _userSequence.isNotEmpty
+          ? _userSequence.last.getLocalizedLabel('en')
+          : null,
+    );
+
+    final progress = _questions.isNotEmpty
+        ? (_currentIndex / _questions.length).clamp(0.0, 1.0)
+        : 0.0;
+
+    return GameContext(
+      gameType: CognitiveGameType.dailyRoutineRecall,
+      gamePhase: _isVerified
+          ? (_isSequenceCorrect ? 'completed' : 'mismatch')
+          : 'arranging',
+      difficulty: widget.difficulty.levelNumber,
+      score: _correctCount * 10,
+      mistakes: _mistakeCount,
+      hintsUsed: _hintCount,
+      elapsedTime: DateTime.now().difference(_startedAt),
+      progress: progress,
+      isActive: !_isTurnLocked,
+      isComplete: _currentIndex >= _questions.length - 1 && _isTurnLocked,
+      availableHints: 3,
+      routineHint: routineHint,
+    );
+  }
+
+  void _updateHelpContext() {
+    if (!mounted) return;
+    final gameContext = _buildGameContext();
+    HelpContextService.instance.updateFromScreenId(
+      HelpScreenId.routine,
+      gameContext: gameContext,
+    );
   }
 
   void _showPauseDialog() async {
@@ -245,6 +329,7 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
 
     return SmritiScaffold(
       title: AppStrings.get('routineRecallTitle'),
+      helpScreenId: HelpScreenId.routine,
       actions: [
         IconButton(
           icon: Icon(
@@ -400,8 +485,21 @@ class _RoutineRecallGameScreenState extends State<RoutineRecallGameScreen> {
               ),
             ],
           ),
-
           const SizedBox(height: 16.0),
+
+          // Gentle Help Prompt (Non-intrusive stuck assistance)
+          if (_stuckService.shouldShowPrompt.value && !_isTurnLocked) ...[
+            GentleHelpPrompt(
+              onHelpMe: () {
+                _stuckService.dismiss();
+                BandhuHelpSheet.show(context);
+              },
+              onNotNow: () {
+                _stuckService.dismiss();
+              },
+            ),
+            const SizedBox(height: 12.0),
+          ],
 
           // 2. INSTRUCTION BANNER
           Container(

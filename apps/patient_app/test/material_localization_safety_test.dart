@@ -127,7 +127,7 @@ void main() {
       for (final langCode in all9Languages) {
         final appName = AppStrings.get('appName', locale: langCode);
         expect(appName, isNotEmpty);
-        expect(appName, contains('SMRITI'));
+        expect(appName, contains('BANDHU'));
 
         final today = AppStrings.get('todaySectionTitle', locale: langCode);
         expect(today, isNotEmpty);

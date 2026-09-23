@@ -48,6 +48,35 @@ enum MemoryCategory {
     }
   }
 
+  String get displayName {
+    switch (this) {
+      case MemoryCategory.family:
+        return 'Family';
+      case MemoryCategory.friends:
+        return 'Friends';
+      case MemoryCategory.places:
+        return 'Places';
+      case MemoryCategory.childhood:
+        return 'Childhood';
+      case MemoryCategory.food:
+        return 'Food & Drinks';
+      case MemoryCategory.festivals:
+        return 'Festivals';
+      case MemoryCategory.traditions:
+        return 'Traditions';
+      case MemoryCategory.importantEvents:
+        return 'Important Events';
+      case MemoryCategory.dailyLife:
+        return 'Daily Life';
+      case MemoryCategory.objects:
+        return 'Objects';
+      case MemoryCategory.music:
+        return 'Music';
+      case MemoryCategory.other:
+        return 'Other';
+    }
+  }
+
   String get localizationKey {
     switch (this) {
       case MemoryCategory.family:

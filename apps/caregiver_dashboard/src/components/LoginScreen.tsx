@@ -71,7 +71,7 @@ export const LoginScreen: React.FC = () => {
             <ShieldCheck size={28} />
           </div>
           <h1 style={{ fontSize: '22px', fontWeight: 'bold', color: 'var(--text-main)', margin: 0 }}>
-            SMRITI Caregiver Portal
+            BANDHU Caregiver Portal
           </h1>
           <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '6px' }}>
             {isRegister ? 'Create your caregiver account' : 'Sign in to access synchronized activity monitoring'}
@@ -237,7 +237,7 @@ export const LoginScreen: React.FC = () => {
 
         <div style={{ marginTop: '24px', paddingTop: '18px', borderTop: '1px solid var(--border-subtle)', textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--color-sage, #3b7a57)', fontWeight: 600, marginBottom: '4px' }}>
-            <HeartHandshake size={16} /> SMRITI
+            <HeartHandshake size={16} /> BANDHU
           </div>
           Patient data is secure and only accessible by authorized caregivers.
         </div>

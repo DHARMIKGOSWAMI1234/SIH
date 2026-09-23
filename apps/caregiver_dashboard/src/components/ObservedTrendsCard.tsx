@@ -14,8 +14,8 @@ export const ObservedTrendsCard: React.FC<ObservedTrendsCardProps> = ({
   const trends: ObservedTrendItem[] = trendsData?.trends || [];
   const reviewFlags: ReviewFlagItem[] = trendsData?.review_flags || [];
   const disclaimer =
-    trendsData?.clinical_disclaimer ||
-    'SMRITI is a non-diagnostic platform. All observations describe recorded application activity and routine completion. SMRITI does not provide clinical diagnoses, dementia severity ratings, disease progression predictions, or medication recommendations.';
+    trendsData?.clinical_disclaimer?.replace(/SMRITI/g, 'BANDHU') ||
+    'BANDHU is a non-diagnostic platform. All observations describe recorded application activity and routine completion. BANDHU does not provide clinical diagnoses, dementia severity ratings, disease progression predictions, or medication recommendations.';
 
   const renderTrendDirectionBadge = (dir: string) => {
     if (dir === 'INCREASED' || dir === 'IMPROVING') {

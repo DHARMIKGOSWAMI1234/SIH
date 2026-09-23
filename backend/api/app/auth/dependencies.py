@@ -13,7 +13,19 @@ from backend.api.app.core.config import settings
 
 security_scheme = HTTPBearer(auto_error=False)
 
-KNOWN_OFFLINE_DEMO_PATIENTS = {"local-patient-demo"}
+KNOWN_OFFLINE_DEMO_PATIENTS = {"local-patient-demo", "local-patient-demo-2"}
+
+async def get_current_user_optional(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),
+    db: Session = Depends(get_db),
+) -> Optional[User]:
+    """Optionally verify JWT or offline token; returns None if not authenticated."""
+    if not credentials:
+        return None
+    try:
+        return await get_current_user(credentials, db)
+    except HTTPException:
+        return None
 
 async def get_current_user(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),

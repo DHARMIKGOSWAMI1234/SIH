@@ -9,7 +9,9 @@ from backend.api.app.schemas.game import GameSessionResponse
 from backend.api.app.schemas.memory import MemoryResponse
 from backend.api.app.schemas.reminder import ReminderResponse
 from backend.api.app.schemas.routine import RoutineResponse
+from backend.api.app.schemas.pairing import PairingCreateResponse, PairingStatusResponse
 from backend.api.app.services.caregiver_service import CaregiverService
+from backend.api.app.services.pairing_service import PairingService
 from backend.api.app.auth.dependencies import (
     get_current_user,
     get_current_caregiver,
@@ -20,6 +22,34 @@ from backend.api.app.models.user import User, UserRole
 from backend.api.app.models.caregiver import Caregiver
 
 router = APIRouter(prefix="/caregivers", tags=["Caregiver Dashboard"])
+
+@router.post("/pairing/create", response_model=PairingCreateResponse, status_code=status.HTTP_201_CREATED)
+def create_pairing_request(
+    current_caregiver: Caregiver = Depends(get_current_caregiver),
+    db: Session = Depends(get_db),
+):
+    """Generate a 4-digit code and secure QR pairing request valid for 10 minutes."""
+    service = PairingService(db)
+    req, caregiver = service.create_pairing_request(current_caregiver.id)
+    return PairingCreateResponse(
+        request_id=req.id,
+        short_code=req.short_code,
+        pairing_token=req.pairing_token,
+        expires_at=req.expires_at.isoformat(),
+        expires_in_seconds=600,
+        qr_payload=req.qr_payload,
+        caregiver_name=caregiver.full_name,
+    )
+
+@router.get("/pairing/{request_id}/status", response_model=PairingStatusResponse)
+def get_pairing_status(
+    request_id: str,
+    current_caregiver: Caregiver = Depends(get_current_caregiver),
+    db: Session = Depends(get_db),
+):
+    """Check pairing completion status for live dashboard updating."""
+    service = PairingService(db)
+    return service.get_pairing_status(request_id, current_caregiver.id)
 
 @router.post("/link-patient", response_model=PatientResponse, status_code=status.HTTP_200_OK)
 def link_patient(
@@ -38,6 +68,7 @@ def link_patient(
         patient_email=req.patient_email,
         relationship_type=req.relationship_type or "Family Caregiver",
     )
+
 
 @router.get("/patients", response_model=List[PatientResponse])
 def get_authorized_patients(

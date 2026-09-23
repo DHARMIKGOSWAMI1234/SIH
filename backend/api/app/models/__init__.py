@@ -8,6 +8,7 @@ from backend.api.app.models.game_session import GameSession
 from backend.api.app.models.reminder import Reminder, ReminderEvent
 from backend.api.app.models.routine import Routine
 from backend.api.app.models.sync_operation import SyncOperation
+from backend.api.app.models.pairing_request import CaregiverPairingRequest
 
 __all__ = [
     "User",
@@ -21,4 +22,6 @@ __all__ = [
     "ReminderEvent",
     "Routine",
     "SyncOperation",
+    "CaregiverPairingRequest",
 ]
+

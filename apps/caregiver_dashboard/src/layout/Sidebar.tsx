@@ -60,7 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <Shield size={18} />
             </div>
             <div>
-              <div className="brand-title">SMRITI</div>
+              <div className="brand-title">BANDHU</div>
               <div className="brand-subtitle">Caregiver Portal</div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import '../../data/local/sync/sync_service.dart';
 import '../../l10n/app_strings.dart';
 import '../../l10n/locale_notifier.dart';
 import '../auth/login_screen.dart';
+import '../help/models/help_screen_id.dart';
 
 /// Settings & Accessibility Screen for patient app.
 /// Fully localized across all 9 supported languages with dynamic theme switching.
@@ -238,13 +239,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return SmritiScaffold(
       title: AppStrings.get('settings', locale: currentLocale),
+      helpScreenId: HelpScreenId.settings,
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          // 1. APPEARANCE / THEME SWITCH SECTION
+          // 1. DISPLAY SECTION
           SmritiSectionHeader(
-            title: 'Appearance',
-            subtitle: 'Choose your preferred visual theme',
+            title: 'Display',
+            subtitle: 'Theme and high-contrast settings',
             icon: Icons.palette_outlined,
           ),
           const SizedBox(height: 8.0),
@@ -317,7 +319,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           const SizedBox(height: 24.0),
 
-          // 2. Preferred Language Section
+          // 2. PREFERRED LANGUAGE SECTION
           SmritiSectionHeader(
             title: AppStrings.get('preferredLanguage', locale: currentLocale),
             subtitle: AppStrings.get('languageSelectorDesc', locale: currentLocale),
@@ -381,36 +383,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           const SizedBox(height: 24.0),
 
-          // 3. Accessibility Controls
+          // 3. VOICE & ACCESSIBILITY SECTION
           SmritiSectionHeader(
-            title: AppStrings.get('settings', locale: currentLocale),
-            subtitle: 'Adjust display and sound preferences to suit your eyes and ears',
-            icon: Icons.accessibility_new_rounded,
+            title: 'Voice & Accessibility',
+            subtitle: 'Voice assistance and high-contrast settings',
+            icon: Icons.record_voice_over_outlined,
           ),
           const SizedBox(height: 8.0),
           SmritiCard(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  activeThumbColor: primaryColor,
-                  activeTrackColor: primaryColor.withValues(alpha: 0.5),
-                  title: Text(
-                    AppStrings.get('highContrast', locale: currentLocale),
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: textPrimary,
-                    ),
-                  ),
-                  subtitle: Text(
-                    'Sharpens text outlines and borders',
-                    style: TextStyle(fontSize: 15.0, color: textSecondary),
-                  ),
-                  value: _highContrast,
-                  onChanged: (val) => setState(() => _highContrast = val),
-                ),
-                Divider(color: borderColor),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   activeThumbColor: primaryColor,
@@ -425,10 +408,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   subtitle: Text(
                     'Reads game instructions softly',
-                    style: TextStyle(fontSize: 15.0, color: textSecondary),
+                    style: TextStyle(fontSize: 14.0, color: textSecondary),
                   ),
                   value: _audioGuidance,
                   onChanged: (val) => setState(() => _audioGuidance = val),
+                ),
+                Divider(color: borderColor),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  activeThumbColor: primaryColor,
+                  activeTrackColor: primaryColor.withValues(alpha: 0.5),
+                  title: Text(
+                    AppStrings.get('highContrast', locale: currentLocale),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: textPrimary,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Sharpens text outlines and borders',
+                    style: TextStyle(fontSize: 14.0, color: textSecondary),
+                  ),
+                  value: _highContrast,
+                  onChanged: (val) => setState(() => _highContrast = val),
                 ),
               ],
             ),
@@ -436,10 +439,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           const SizedBox(height: 24.0),
 
-          // 4. Local Storage & Data Sync
+          // 4. YOUR DATA SECTION
           SmritiSectionHeader(
-            title: AppStrings.get('synced', locale: currentLocale),
-            subtitle: 'All progress is preserved on this device even without internet',
+            title: 'Your Data',
+            subtitle: 'Saved locally and secure on this device',
             icon: Icons.sync_rounded,
           ),
           const SizedBox(height: 8.0),
@@ -489,14 +492,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           const SizedBox(height: 24.0),
 
-          // 5. Account & Session
+          // 5. ABOUT BANDHU
           SmritiSectionHeader(
-            title: AppStrings.get('signOut', locale: currentLocale),
-            subtitle: 'Manage your active sign-in on this device',
+            title: 'About BANDHU',
+            subtitle: 'Cognitive assistance companion',
+            icon: Icons.info_outline_rounded,
+          ),
+          const SizedBox(height: 8.0),
+          Container(
+            padding: const EdgeInsets.all(18.0),
+            decoration: BoxDecoration(
+              color: cardColor,
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(color: borderColor, width: 1.5),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.get('helpTitle', locale: currentLocale),
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: textPrimary),
+                ),
+                const SizedBox(height: 6.0),
+                Text(
+                  AppStrings.get('nonClinicalNotice', locale: currentLocale),
+                  style: TextStyle(fontSize: 14.5, color: textSecondary, height: 1.45),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 32.0),
+
+          // 6. ACCOUNT & SESSION (Visually Separated)
+          Divider(color: borderColor, thickness: 1.5),
+          const SizedBox(height: 16.0),
+          SmritiSectionHeader(
+            title: 'Account',
+            subtitle: 'Manage your active session on this device',
             icon: Icons.account_circle_outlined,
           ),
           const SizedBox(height: 8.0),
           SmritiCard(
+            borderColor: isDark ? AppColors.darkBorder : AppColors.lightBorder,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -507,7 +545,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const SizedBox(height: 4.0),
                 Text(
                   AppStrings.get('signOutConfirmMessage', locale: currentLocale),
-                  style: TextStyle(fontSize: 15.0, color: textSecondary),
+                  style: TextStyle(fontSize: 14.5, color: textSecondary, height: 1.35),
                 ),
                 const SizedBox(height: 16.0),
                 SmritiPrimaryButton(
@@ -524,33 +562,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         backgroundColor: cardColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
-                          side: BorderSide(color: borderColor),
+                          side: BorderSide(color: borderColor, width: 1.5),
                         ),
+                        titlePadding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 12.0),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                        actionsPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+                        actionsOverflowButtonSpacing: 8.0,
                         title: Row(
                           children: [
                             const Icon(Icons.logout_rounded, color: AppColors.errorRed, size: 28.0),
                             const SizedBox(width: 10.0),
-                            Text(
-                              AppStrings.get('signOutConfirmTitle', locale: currentLocale),
-                              style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold),
+                            Expanded(
+                              child: Text(
+                                AppStrings.get('signOutConfirmTitle', locale: currentLocale),
+                                style: TextStyle(
+                                  color: textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 19.0,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
                         content: Text(
                           AppStrings.get('signOutConfirmMessage', locale: currentLocale),
-                          style: TextStyle(fontSize: 16.0, color: textSecondary),
+                          style: TextStyle(fontSize: 15.5, color: textSecondary, height: 1.4),
                         ),
                         actions: [
                           TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: const Size(80, 48),
+                            ),
                             onPressed: () => Navigator.of(dialogCtx).pop(),
                             child: Text(
                               AppStrings.get('cancelBtn', locale: currentLocale),
-                              style: TextStyle(fontSize: 16.0, color: textSecondary),
+                              style: TextStyle(fontSize: 16.0, color: textSecondary, fontWeight: FontWeight.bold),
                             ),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.errorRed,
+                              minimumSize: const Size(100, 48),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
                             ),
                             onPressed: () async {
@@ -572,32 +626,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     );
                   },
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 24.0),
-
-          // 6. Clinical Boundary Transparency Box
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: cardColor,
-              borderRadius: BorderRadius.circular(14.0),
-              border: Border.all(color: borderColor),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.get('helpTitle', locale: currentLocale),
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: textPrimary),
-                ),
-                const SizedBox(height: 6.0),
-                Text(
-                  AppStrings.get('nonClinicalNotice', locale: currentLocale),
-                  style: TextStyle(fontSize: 14.0, color: textSecondary, height: 1.4),
                 ),
               ],
             ),

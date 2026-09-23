@@ -266,7 +266,7 @@ class _VoiceInteractionSheetState extends State<VoiceInteractionSheet>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'SMRITI',
+                            'BANDHU',
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,

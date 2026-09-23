@@ -12,6 +12,7 @@ import '../../data/local/database/app_database.dart';
 import '../../data/local/repositories/smriti_repository.dart';
 import '../../l10n/app_strings.dart';
 import '../../l10n/locale_notifier.dart';
+import '../help/models/help_screen_id.dart';
 
 /// Progress Screen: Displays real local SQLite session history and non-clinical engagement trends.
 /// Strictly non-diagnostic, non-medical, and designed for elderly readability.
@@ -105,7 +106,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 value: '$activeDays ${activeDays == 1 ? "Day" : "Days"}',
                 icon: Icons.local_fire_department_rounded,
                 color: isDark ? AppColors.darkWarmPeach : AppColors.lightWarmAccent,
-                subtitle: AppStrings.get('daysConsistent', locale: loc),
               ),
             ),
             const SizedBox(width: 12.0),
@@ -115,13 +115,12 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 value: '$totalCompleted',
                 icon: Icons.check_circle_rounded,
                 color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
-                subtitle: AppStrings.get('completed', locale: loc),
               ),
             ),
           ],
         ),
 
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 14.0),
 
         // 2. Weekly Engagement Trend
         SmritiCard(
@@ -170,9 +169,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
           ),
         ),
 
-        const SizedBox(height: 20.0),
+        const SizedBox(height: 18.0),
 
-        // 3. Caregiver Transparency Notice
+        // 3. Patient Activity & Peaceful Consistency Note
         SmritiCard(
           backgroundColor: isDark ? AppColors.darkCard : AppColors.lightWarmAccent.withValues(alpha: 0.1),
           borderColor: isDark ? AppColors.darkBorder : AppColors.lightWarmAccent.withValues(alpha: 0.4),
@@ -182,18 +181,18 @@ class _ProgressScreenState extends State<ProgressScreen> {
               Row(
                 children: [
                   Icon(
-                    Icons.shield_outlined,
-                    color: isDark ? AppColors.darkWarmPeach : AppColors.lightWarmAccent,
+                    Icons.verified_rounded,
+                    color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     size: 26.0,
                   ),
                   const SizedBox(width: 10.0),
                   Expanded(
                     child: Text(
-                      AppStrings.get('caregiverNoteTitle', locale: loc),
+                      '${AppStrings.get('navProgress', locale: loc)} — ${AppStrings.get('synced', locale: loc)}',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
-                        color: isDark ? AppColors.darkWarmPeach : AppColors.lightWarmAccent,
+                        color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
                       ),
                     ),
                   ),
@@ -201,18 +200,18 @@ class _ProgressScreenState extends State<ProgressScreen> {
               ),
               const SizedBox(height: 10.0),
               Text(
-                AppStrings.get('caregiverNoteDesc', locale: loc),
+                'Every gentle activity and daily step you complete is stored safely on this device to help support your mind and daily comfort.',
                 style: TextStyle(
                   fontSize: 16.0,
                   color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
-                  height: 1.5,
+                  height: 1.45,
                 ),
               ),
             ],
           ),
         ),
 
-        const SizedBox(height: 24.0),
+        const SizedBox(height: 22.0),
 
         // 4. Recent Completed Activities Log
         SmritiSectionHeader(
@@ -275,6 +274,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
     return SmritiScaffold(
       title: AppStrings.get('progressTitle', locale: loc),
+      helpScreenId: HelpScreenId.progress,
       actions: [
         IconButton(
           icon: Icon(

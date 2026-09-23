@@ -5,8 +5,8 @@ void main() {
   testWidgets('SmritiApp initial load renders splash screen branding', (WidgetTester tester) async {
     await tester.pumpWidget(const SmritiApp());
 
-    // Verify SMRITI branding and subtitle are present
-    expect(find.text('SMRITI'), findsOneWidget);
+    // Verify BANDHU branding and subtitle are present
+    expect(find.text('BANDHU'), findsOneWidget);
     expect(find.text('AI Cognitive Care Companion'), findsOneWidget);
     expect(find.text('North Eastern Region (NER)'), findsOneWidget);
 

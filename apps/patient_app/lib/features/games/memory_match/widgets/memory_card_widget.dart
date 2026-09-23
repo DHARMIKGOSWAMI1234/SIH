@@ -180,7 +180,7 @@ class MemoryCardWidget extends StatelessWidget {
             ),
             const SizedBox(height: 4.0),
             Text(
-              isHinted ? 'Hint' : 'SMRITI',
+              isHinted ? 'Hint' : 'BANDHU',
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold,

@@ -108,6 +108,7 @@ class AuthService extends ChangeNotifier {
         // Normalize any arbitrary legacy offline tokens to the known demo patient.
         if (token.startsWith('offline-') &&
             token != 'offline-local-patient-demo' &&
+            token != 'offline-local-patient-demo-2' &&
             !(userData['fullName'] != null && (userData['fullName'] as String).startsWith('Patient '))) {
           activeToken = 'offline-local-patient-demo';
           activeUserData = Map<String, dynamic>.from(userData);
@@ -468,7 +469,7 @@ Exception message: ${e.message}
 Response body: NONE
 ---------------''');
       }
-      _errorMessage = 'Internet is required to create a new SMRITI account.';
+      _errorMessage = 'Internet is required to create a new BANDHU account.';
     } on http.ClientException catch (e) {
       if (kDebugMode) {
         debugPrint('''
@@ -481,7 +482,7 @@ Exception message: ${e.message}
 Response body: NONE
 ---------------''');
       }
-      _errorMessage = 'Internet is required to create a new SMRITI account.';
+      _errorMessage = 'Internet is required to create a new BANDHU account.';
     } catch (e) {
       final errStr = e.toString();
       final isNetwork = errStr.contains('SocketException') ||
@@ -503,7 +504,7 @@ Response body: NONE
       }
 
       if (isNetwork) {
-        _errorMessage = 'Internet is required to create a new SMRITI account.';
+        _errorMessage = 'Internet is required to create a new BANDHU account.';
       } else {
         _errorMessage = 'Something went wrong. Please try again.';
       }

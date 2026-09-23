@@ -9,6 +9,7 @@ import '../../../../l10n/app_strings.dart';
 import '../../../../l10n/locale_notifier.dart';
 import '../models/pattern_recognition_state.dart';
 import 'pattern_recognition_game_screen.dart';
+import '../../../help/models/help_screen_id.dart';
 
 /// Patient-facing introductory screen for Pattern Recognition.
 /// Explains how to play gently and allows selection of difficulty.
@@ -50,6 +51,7 @@ class _PatternRecognitionIntroScreenState
 
     return SmritiScaffold(
       title: AppStrings.get('patternGame', locale: loc),
+      helpScreenId: HelpScreenId.patternRecognition,
       body: ListView(
         padding: const EdgeInsets.all(24.0),
         children: [

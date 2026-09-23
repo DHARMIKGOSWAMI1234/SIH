@@ -442,6 +442,49 @@ export class CaregiverApiClient {
       return null;
     }
   }
+
+  async createPairingRequest(): Promise<PairingCreateResponse | null> {
+    try {
+      const resp = await fetch(`${this.baseUrl}/api/v1/caregivers/pairing/create`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+      });
+      if (!resp.ok) return null;
+      return await resp.json();
+    } catch {
+      return null;
+    }
+  }
+
+  async getPairingStatus(requestId: string): Promise<PairingStatusResponse | null> {
+    try {
+      const resp = await fetch(`${this.baseUrl}/api/v1/caregivers/pairing/${requestId}/status`, {
+        headers: this.getHeaders(),
+      });
+      if (!resp.ok) return null;
+      return await resp.json();
+    } catch {
+      return null;
+    }
+  }
+}
+
+export interface PairingCreateResponse {
+  request_id: string;
+  short_code: string;
+  pairing_token: string;
+  qr_payload: string;
+  expires_at: string;
+  expires_in_seconds: number;
+  caregiver_name: string;
+}
+
+export interface PairingStatusResponse {
+  request_id: string;
+  status: 'PENDING' | 'USED' | 'EXPIRED' | 'CANCELLED';
+  is_used: boolean;
+  patient_id?: string | null;
+  patient_name?: string | null;
 }
 
 export const caregiverApi = new CaregiverApiClient();

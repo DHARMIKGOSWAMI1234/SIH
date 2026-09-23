@@ -8,6 +8,7 @@ import '../../../../core/widgets/smriti_section_header.dart';
 import '../../../../l10n/app_strings.dart';
 import '../models/routine_recall_state.dart';
 import 'routine_recall_game_screen.dart';
+import '../../../help/models/help_screen_id.dart';
 
 /// Instructions and difficulty selection screen for Daily Routine Recall.
 class RoutineRecallIntroScreen extends StatefulWidget {
@@ -38,6 +39,7 @@ class _RoutineRecallIntroScreenState extends State<RoutineRecallIntroScreen> {
 
     return SmritiScaffold(
       title: AppStrings.get('routineRecallTitle'),
+      helpScreenId: HelpScreenId.routine,
       body: ListView(
         padding: const EdgeInsets.all(24.0),
         children: [

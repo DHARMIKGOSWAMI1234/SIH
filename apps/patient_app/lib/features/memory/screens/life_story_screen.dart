@@ -6,6 +6,7 @@ import '../../../data/local/database/app_database.dart';
 import '../../../data/local/repositories/smriti_repository.dart';
 import '../models/memory_categories.dart';
 import '../services/memory_media_service.dart';
+import '../../help/models/help_screen_id.dart';
 import 'memory_detail_screen.dart';
 import 'add_memory_screen.dart';
 
@@ -73,7 +74,13 @@ class _LifeStoryScreenState extends State<LifeStoryScreen> {
 
     return SmritiScaffold(
       title: 'My Life Story',
+      helpScreenId: HelpScreenId.lifeStory,
       actions: [
+        IconButton(
+          icon: const Icon(Icons.playlist_add_rounded, size: 28.0),
+          tooltip: 'Load Sample Milestones',
+          onPressed: _seedSampleMilestones,
+        ),
         IconButton(
           icon: const Icon(Icons.add_circle_outline_rounded, size: 28.0),
           onPressed: () async {
@@ -87,6 +94,47 @@ class _LifeStoryScreenState extends State<LifeStoryScreen> {
       ],
       body: content,
     );
+  }
+
+  Future<void> _seedSampleMilestones() async {
+    final repo = context.read<SmritiRepository>();
+    final samples = [
+      {
+        'title': 'Born in Dibrugarh',
+        'desc': 'Welcomed into the world on a cool autumn morning in Assam surrounded by loving grandparents.',
+        'year': 1948,
+        'cat': 'childhood',
+      },
+      {
+        'title': 'High School Graduation',
+        'desc': 'Completed schooling with high honors and made lifelong childhood friends.',
+        'year': 1965,
+        'cat': 'important_events',
+      },
+      {
+        'title': 'Wedding Celebration',
+        'desc': 'A joyful traditional ceremony with family, traditional brass gongs, and festive feasts.',
+        'year': 1972,
+        'cat': 'family',
+      },
+      {
+        'title': 'New Family Home',
+        'desc': 'Built our family house with a garden filled with orchids and a quiet veranda.',
+        'year': 1980,
+        'cat': 'places',
+      },
+    ];
+
+    for (final s in samples) {
+      await repo.insertMemory(
+        title: s['title'] as String,
+        description: s['desc'] as String,
+        category: s['cat'] as String,
+        eventDate: DateTime(s['year'] as int, 6, 15),
+        source: 'sample_timeline',
+      );
+    }
+    await _loadTimeline();
   }
 
   Widget _buildEmptyState(bool isDark) {

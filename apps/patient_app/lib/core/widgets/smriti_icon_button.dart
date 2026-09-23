@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/smriti_theme.dart';
+import '../theme/app_colors.dart';
 
-/// Accessible icon button strictly adhering to the 56dp+ minimum touch target.
+/// Accessible icon button strictly adhering to the 48dp-56dp+ minimum touch target.
 class SmritiIconButton extends StatelessWidget {
   final IconData icon;
   final String tooltip;
@@ -24,7 +25,10 @@ class SmritiIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final targetSize = minSize ?? SmritiTheme.minTouchTarget;
+    final effectiveColor = color ?? (isDark ? AppColors.darkTextPrimary : SmritiTheme.deepSlate);
+
     return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: targetSize,
@@ -39,7 +43,7 @@ class SmritiIconButton extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: IconButton(
             iconSize: iconSize ?? 32.0,
-            icon: Icon(icon, color: color ?? SmritiTheme.deepSlate),
+            icon: Icon(icon, color: effectiveColor),
             onPressed: onPressed,
           ),
         ),

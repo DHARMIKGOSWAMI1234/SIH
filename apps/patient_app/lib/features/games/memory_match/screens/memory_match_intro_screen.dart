@@ -7,6 +7,7 @@ import '../../../../core/widgets/smriti_primary_button.dart';
 import '../../../../core/widgets/smriti_secondary_button.dart';
 import '../models/memory_match_state.dart';
 import 'memory_match_game_screen.dart';
+import '../../../help/models/help_screen_id.dart';
 
 /// Introductory screen for Memory Match.
 /// Allows difficulty selection with high readability and zero anxiety.
@@ -37,6 +38,7 @@ class _MemoryMatchIntroScreenState extends State<MemoryMatchIntroScreen> {
 
     return SmritiScaffold(
       title: 'Memory Match',
+      helpScreenId: HelpScreenId.memoryMatch,
       body: ListView(
         padding: const EdgeInsets.all(24.0),
         children: [

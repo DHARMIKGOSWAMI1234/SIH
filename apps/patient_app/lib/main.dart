@@ -16,6 +16,8 @@ import 'features/splash/splash_screen.dart';
 import 'l10n/framework_locale_mapper.dart';
 import 'l10n/locale_notifier.dart';
 import 'core/config/api_config.dart';
+import 'features/help/services/help_context_service.dart';
+import 'features/help/services/bandhu_route_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +60,7 @@ void main() async {
         ChangeNotifierProvider<LocaleNotifier>.value(value: localeNotifier),
         ChangeNotifierProvider<ThemeNotifier>.value(value: themeNotifier),
         ChangeNotifierProvider<VoiceService>.value(value: voiceService),
+        ChangeNotifierProvider<HelpContextService>.value(value: HelpContextService.instance),
       ],
       child: const SmritiApp(),
     ),
@@ -75,6 +78,7 @@ class SmritiApp extends StatelessWidget {
   final LocaleNotifier? localeNotifier;
   final ThemeNotifier? themeNotifier;
   final VoiceService? voiceService;
+  final HelpContextService? helpContextService;
 
   const SmritiApp({
     super.key,
@@ -87,6 +91,7 @@ class SmritiApp extends StatelessWidget {
     this.localeNotifier,
     this.themeNotifier,
     this.voiceService,
+    this.helpContextService,
   });
 
   @override
@@ -96,7 +101,7 @@ class SmritiApp extends StatelessWidget {
       final thmNotifier = Provider.of<ThemeNotifier?>(ctx);
 
       return MaterialApp(
-        title: 'SMRITI — AI Cognitive Care Companion',
+        title: 'BANDHU — AI Cognitive Care Companion',
         debugShowCheckedModeBanner: false,
         theme: SmritiTheme.lightTheme,
         darkTheme: SmritiTheme.darkTheme,
@@ -109,6 +114,9 @@ class SmritiApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         localeResolutionCallback: FrameworkLocaleMapper.resolveLocale,
+        navigatorObservers: [
+          BandhuRouteObserver(),
+        ],
         home: const SplashScreen(),
       );
     }
@@ -138,6 +146,7 @@ class SmritiApp extends StatelessWidget {
           );
       final thm = themeNotifier ?? ThemeNotifier(storage: storage);
       final voice = voiceService ?? VoiceService();
+      final help = helpContextService ?? HelpContextService.instance;
 
       return MultiProvider(
         providers: [
@@ -150,6 +159,7 @@ class SmritiApp extends StatelessWidget {
           ChangeNotifierProvider<LocaleNotifier>.value(value: loc),
           ChangeNotifierProvider<ThemeNotifier>.value(value: thm),
           ChangeNotifierProvider<VoiceService>.value(value: voice),
+          ChangeNotifierProvider<HelpContextService>.value(value: help),
         ],
         child: Builder(builder: buildApp),
       );

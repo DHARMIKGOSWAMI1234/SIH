@@ -8,6 +8,7 @@ import {
   ChevronDown,
   LogOut,
   Globe,
+  UserPlus,
 } from 'lucide-react';
 import { PatientProfile } from '../api/client';
 import { useTranslation } from '../context/LocalizationContext';
@@ -39,6 +40,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   onPatientChange,
   caregiverName,
   patients = [],
+  onLinkPatientClick,
   onLogout,
 }) => {
   const { currentLanguage, setLanguage, languages, t } = useTranslation();
@@ -56,7 +58,7 @@ export const TopBar: React.FC<TopBarProps> = ({
         </button>
 
         {/* Patient Selector */}
-        <div className="patient-selector-container">
+        <div className="patient-selector-container" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label htmlFor="patient-select" className="patient-selector-label">
             {t('header.patient')}:
           </label>
@@ -79,6 +81,28 @@ export const TopBar: React.FC<TopBarProps> = ({
             </select>
             <ChevronDown size={14} className="select-chevron" />
           </div>
+
+          {onLinkPatientClick && (
+            <button
+              type="button"
+              onClick={onLinkPatientClick}
+              className="btn btn-primary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '5px 10px',
+                fontSize: '12px',
+                borderRadius: '6px',
+                fontWeight: 600,
+                whiteSpace: 'nowrap',
+              }}
+              title="Pair with a new patient device"
+            >
+              <UserPlus size={13} />
+              <span>+ Connect</span>
+            </button>
+          )}
         </div>
 
         {/* Search */}

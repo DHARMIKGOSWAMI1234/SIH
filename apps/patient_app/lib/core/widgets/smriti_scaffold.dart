@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../../features/help/models/help_screen_id.dart';
+import '../../features/help/widgets/bandhu_help_button.dart';
+import '../../features/help/services/help_context_service.dart';
 
 /// Predictable, high-contrast scaffold for elderly-friendly navigation.
 class SmritiScaffold extends StatelessWidget {
@@ -9,6 +12,8 @@ class SmritiScaffold extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? bottomNavigationBar;
   final bool showBackButton;
+  final HelpScreenId? helpScreenId;
+  final bool showHelpButton;
 
   const SmritiScaffold({
     super.key,
@@ -18,14 +23,25 @@ class SmritiScaffold extends StatelessWidget {
     this.actions,
     this.bottomNavigationBar,
     this.showBackButton = true,
+    this.helpScreenId,
+    this.showHelpButton = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (helpScreenId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        HelpContextService.instance.updateFromScreenId(helpScreenId!);
+      });
+    }
+
     final canPop = Navigator.canPop(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark ? AppColors.darkBackground : AppColors.lightBackground;
     final fgColor = isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+
+    final effectiveFab = floatingActionButton ??
+        (showHelpButton ? BandhuHelpButton(screenId: helpScreenId) : null);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -61,9 +77,14 @@ class SmritiScaffold extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: body,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1200.0),
+            child: body,
+          ),
+        ),
       ),
-      floatingActionButton: floatingActionButton,
+      floatingActionButton: effectiveFab,
       bottomNavigationBar: bottomNavigationBar,
     );
   }

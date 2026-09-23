@@ -6,6 +6,7 @@ import '../../core/widgets/smriti_card.dart';
 import '../../core/widgets/smriti_section_header.dart';
 import '../../l10n/app_strings.dart';
 import '../../l10n/locale_notifier.dart';
+import '../help/models/help_screen_id.dart';
 
 class ReminderItemData {
   final String title;
@@ -170,6 +171,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
 
     return SmritiScaffold(
       title: AppStrings.get('dailyReminders', locale: loc),
+      helpScreenId: HelpScreenId.reminders,
       body: content,
     );
   }

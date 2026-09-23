@@ -12,10 +12,14 @@ import '../../features/memory/services/memory_rescue_service.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/games/games_screen.dart';
 import '../../features/memory/memory_screen.dart';
+import '../../features/my_day/screens/my_day_screen.dart';
 import '../../features/reminders/reminders_screen.dart';
 import '../../features/progress/progress_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/profile/profile_screen.dart';
+import '../../features/help/widgets/bandhu_help_button.dart';
+import '../../features/help/widgets/bandhu_help_sheet.dart';
+import '../../features/help/services/help_context_service.dart';
 
 /// Unified application shell for SMRITI Patient Application.
 /// Provides elderly-first navigation with large touch targets, clear icons,
@@ -41,16 +45,22 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      HelpContextService.instance.updateFromShellTab(
+        _currentIndex,
+        language: _getActiveLocale(),
+      );
+    });
   }
 
   void _onTabSelected(int index) {
-    if (index == 5) {
-      _showHelpDialog();
-      return;
-    }
     setState(() {
       _currentIndex = index;
     });
+    HelpContextService.instance.updateFromShellTab(
+      index,
+      language: _getActiveLocale(),
+    );
   }
 
   void _openVoiceSheet(BuildContext context, String currentLocale) {
@@ -154,6 +164,20 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
           ),
         ),
         actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              BandhuHelpSheet.show(context);
+            },
+            child: Text(
+              AppStrings.get('bandhuHelp', locale: loc),
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: isDark ? AppColors.darkPrimary : SmritiTheme.restorativeSage,
+              ),
+            ),
+          ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: SmritiTheme.restorativeSage,
@@ -209,7 +233,6 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
       ],
     );
   }
-
   String _getActiveLocale() {
     try {
       final locNotifier = context.watch<LocaleNotifier?>();
@@ -232,14 +255,19 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
       const MemoryScreen(isEmbedded: true),
       const RemindersScreen(isEmbedded: true),
       ProgressScreen(key: ValueKey('progress_$_currentIndex'), isEmbedded: true),
+      const MyDayScreen(isEmbedded: true),
     ];
+
+    final width = MediaQuery.of(context).size.width;
+    final isTabletOrDesktop = width >= 600.0;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: isDark ? AppColors.darkBackground : AppColors.lightBackground,
-        titleSpacing: 12.0,
+        elevation: 0,
+        titleSpacing: 16.0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -249,11 +277,13 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
               style: TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 0.5,
                 color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
               ),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
+            const SizedBox(height: 2.0),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -270,7 +300,7 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
                   child: Text(
                     AppStrings.get('offlineReady', locale: currentLocale),
                     style: TextStyle(
-                      fontSize: 12.0,
+                      fontSize: 12.5,
                       fontWeight: FontWeight.w600,
                       color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
                     ),
@@ -287,40 +317,59 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
           SmritiIconButton(
             icon: Icons.mic_rounded,
             tooltip: AppStrings.get('talkToMe', locale: currentLocale),
-            minSize: 44.0,
-            iconSize: 26.0,
+            minSize: 48.0,
+            iconSize: 24.0,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            backgroundColor: isDark
+                ? AppColors.darkSoftBlue.withValues(alpha: 0.7)
+                : AppColors.lightPrimary.withValues(alpha: 0.12),
             onPressed: () => _openVoiceSheet(context, currentLocale),
           ),
+          const SizedBox(width: 2.0),
           SmritiIconButton(
             icon: Icons.help_outline_rounded,
             tooltip: AppStrings.get('navHelp', locale: currentLocale),
-            minSize: 44.0,
-            iconSize: 26.0,
+            minSize: 48.0,
+            iconSize: 24.0,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            backgroundColor: isDark
+                ? AppColors.darkSoftBlue.withValues(alpha: 0.7)
+                : AppColors.lightPrimary.withValues(alpha: 0.12),
             onPressed: _showHelpDialog,
           ),
+          const SizedBox(width: 2.0),
           SmritiIconButton(
             icon: Icons.person_outline_rounded,
-            tooltip: AppStrings.get('navSettings', locale: currentLocale),
-            minSize: 44.0,
-            iconSize: 26.0,
+            tooltip: AppStrings.get('profileTooltip', locale: currentLocale),
+            minSize: 48.0,
+            iconSize: 24.0,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            backgroundColor: isDark
+                ? AppColors.darkSoftBlue.withValues(alpha: 0.7)
+                : AppColors.lightPrimary.withValues(alpha: 0.12),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const ProfileScreen()),
               );
             },
           ),
+          const SizedBox(width: 2.0),
           SmritiIconButton(
             icon: Icons.settings_outlined,
             tooltip: AppStrings.get('navSettings', locale: currentLocale),
-            minSize: 44.0,
-            iconSize: 26.0,
+            minSize: 48.0,
+            iconSize: 24.0,
+            color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            backgroundColor: isDark
+                ? AppColors.darkSoftBlue.withValues(alpha: 0.7)
+                : AppColors.lightPrimary.withValues(alpha: 0.12),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const SettingsScreen()),
               );
             },
           ),
-          const SizedBox(width: 4.0),
+          const SizedBox(width: 8.0),
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(2.0),
@@ -331,78 +380,156 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
           ),
         ),
       ),
-      body: IndexedStack(
-        index: _currentIndex < pages.length ? _currentIndex : 0,
-        children: pages,
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.darkCard : AppColors.lightCard,
-          border: Border(
-            top: BorderSide(
-              color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-              width: 1.5,
-            ),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
-              blurRadius: 8.0,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: isTabletOrDesktop
+          ? Row(
               children: [
-                Expanded(
-                  child: _buildNavItem(
-                    index: 0,
-                    label: AppStrings.get('navHome', locale: currentLocale),
-                    icon: Icons.home_rounded,
-                    isDark: isDark,
+                NavigationRail(
+                  backgroundColor: isDark ? AppColors.darkCard : AppColors.lightCard,
+                  selectedIndex: _currentIndex < pages.length ? _currentIndex : 0,
+                  onDestinationSelected: _onTabSelected,
+                  labelType: NavigationRailLabelType.all,
+                  minWidth: 72.0,
+                  selectedIconTheme: IconThemeData(
+                    color: isDark ? AppColors.darkPrimary : AppColors.primaryGreen,
+                    size: 28.0,
                   ),
+                  unselectedIconTheme: IconThemeData(
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                    size: 24.0,
+                  ),
+                  selectedLabelTextStyle: TextStyle(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? AppColors.darkPrimary : AppColors.primaryGreen,
+                  ),
+                  unselectedLabelTextStyle: TextStyle(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                  ),
+                  destinations: [
+                    NavigationRailDestination(
+                      icon: const Icon(Icons.home_rounded),
+                      label: Text(AppStrings.get('navHome', locale: currentLocale)),
+                    ),
+                    NavigationRailDestination(
+                      icon: const Icon(Icons.psychology_rounded),
+                      label: Text(AppStrings.get('navGames', locale: currentLocale)),
+                    ),
+                    NavigationRailDestination(
+                      icon: const Icon(Icons.photo_library_rounded),
+                      label: Text(AppStrings.get('navMemories', locale: currentLocale)),
+                    ),
+                    NavigationRailDestination(
+                      icon: const Icon(Icons.schedule_rounded),
+                      label: Text(AppStrings.get('navReminders', locale: currentLocale)),
+                    ),
+                    NavigationRailDestination(
+                      icon: const Icon(Icons.insights_rounded),
+                      label: Text(AppStrings.get('navProgress', locale: currentLocale)),
+                    ),
+                    NavigationRailDestination(
+                      icon: const Icon(Icons.wb_sunny_rounded),
+                      label: Text(AppStrings.get('navMyDay', locale: currentLocale)),
+                    ),
+                  ],
+                ),
+                VerticalDivider(
+                  width: 1.0,
+                  thickness: 1.0,
+                  color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
                 ),
                 Expanded(
-                  child: _buildNavItem(
-                    index: 1,
-                    label: AppStrings.get('navGames', locale: currentLocale),
-                    icon: Icons.psychology_rounded,
-                    isDark: isDark,
-                  ),
-                ),
-                Expanded(
-                  child: _buildNavItem(
-                    index: 2,
-                    label: AppStrings.get('navMemories', locale: currentLocale),
-                    icon: Icons.photo_library_rounded,
-                    isDark: isDark,
-                  ),
-                ),
-                Expanded(
-                  child: _buildNavItem(
-                    index: 3,
-                    label: AppStrings.get('navReminders', locale: currentLocale),
-                    icon: Icons.schedule_rounded,
-                    isDark: isDark,
-                  ),
-                ),
-                Expanded(
-                  child: _buildNavItem(
-                    index: 4,
-                    label: AppStrings.get('navProgress', locale: currentLocale),
-                    icon: Icons.insights_rounded,
-                    isDark: isDark,
+                  child: IndexedStack(
+                    index: _currentIndex < pages.length ? _currentIndex : 0,
+                    children: pages,
                   ),
                 ),
               ],
+            )
+          : IndexedStack(
+              index: _currentIndex < pages.length ? _currentIndex : 0,
+              children: pages,
             ),
-          ),
-        ),
-      ),
+      floatingActionButton: const BandhuHelpButton(),
+      bottomNavigationBar: isTabletOrDesktop
+          ? null
+          : Container(
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkCard : AppColors.lightCard,
+                border: Border(
+                  top: BorderSide(
+                    color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                    width: 1.5,
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.06),
+                    blurRadius: 10.0,
+                    offset: const Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: _buildNavItem(
+                          index: 0,
+                          label: AppStrings.get('navHome', locale: currentLocale),
+                          icon: Icons.home_rounded,
+                          isDark: isDark,
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          index: 1,
+                          label: AppStrings.get('navGames', locale: currentLocale),
+                          icon: Icons.psychology_rounded,
+                          isDark: isDark,
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          index: 2,
+                          label: AppStrings.get('navMemories', locale: currentLocale),
+                          icon: Icons.photo_library_rounded,
+                          isDark: isDark,
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          index: 3,
+                          label: AppStrings.get('navReminders', locale: currentLocale),
+                          icon: Icons.schedule_rounded,
+                          isDark: isDark,
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          index: 4,
+                          label: AppStrings.get('navProgress', locale: currentLocale),
+                          icon: Icons.insights_rounded,
+                          isDark: isDark,
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildNavItem(
+                          index: 5,
+                          label: AppStrings.get('navMyDay', locale: currentLocale),
+                          icon: Icons.wb_sunny_rounded,
+                          isDark: isDark,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
     );
   }
 
@@ -413,36 +540,56 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
     required bool isDark,
   }) {
     final isSelected = _currentIndex == index;
-    final activeColor = isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+    final activeColor = isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary;
+    final activePillColor = isDark
+        ? AppColors.darkSoftBlue
+        : AppColors.lightPrimary.withValues(alpha: 0.2);
     final inactiveColor = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
 
-    return InkWell(
-      onTap: () => _onTabSelected(index),
-      borderRadius: BorderRadius.circular(12.0),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 26.0,
-              color: isSelected ? activeColor : inactiveColor,
-            ),
-            const SizedBox(height: 3.0),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                label,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 13.0,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                  color: isSelected ? activeColor : inactiveColor,
+    return Semantics(
+      selected: isSelected,
+      label: label,
+      button: true,
+      child: InkWell(
+        onTap: () => _onTabSelected(index),
+        borderRadius: BorderRadius.circular(16.0),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 56.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 2.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
+                  decoration: BoxDecoration(
+                    color: isSelected ? activePillColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 24.0,
+                    color: isSelected ? (isDark ? AppColors.darkPrimary : AppColors.lightTextPrimary) : inactiveColor,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 2.0),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 13.0,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                      color: isSelected ? activeColor : inactiveColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

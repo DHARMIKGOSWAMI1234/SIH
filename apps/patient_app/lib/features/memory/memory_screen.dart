@@ -16,6 +16,11 @@ import 'screens/add_memory_screen.dart';
 import 'screens/memory_detail_screen.dart';
 import 'screens/life_story_screen.dart';
 import 'screens/memory_activity_screen.dart';
+import 'screens/familiar_world_screen.dart';
+import 'screens/family_connect_screen.dart';
+import 'screens/reminiscence_screen.dart';
+import 'screens/music_memory_screen.dart';
+import '../help/models/help_screen_id.dart';
 
 /// Personal Memory Bank Screen.
 ///
@@ -196,6 +201,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
 
     return SmritiScaffold(
       title: AppStrings.get('memoryBankCardTitle', locale: loc),
+      helpScreenId: _viewMode == 1 ? HelpScreenId.lifeStory : HelpScreenId.personalMemory,
       actions: [
         IconButton(
           icon: const Icon(Icons.psychology_rounded, size: 28.0),
@@ -213,6 +219,58 @@ class _MemoryScreenState extends State<MemoryScreen> {
         ),
       ],
       body: bodyContent,
+    );
+  }
+
+  Widget _buildQuickExploreCard({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required Color color,
+    required VoidCallback onTap,
+    required bool isDark,
+  }) {
+    return SmritiCard(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            width: 44.0,
+            height: 44.0,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Icon(icon, color: color, size: 24.0),
+          ),
+          const SizedBox(width: 12.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 6.0),
+          Icon(Icons.chevron_right_rounded, color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
+        ],
+      ),
     );
   }
 
@@ -285,7 +343,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
             );
           },
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 12.0),
 
         // Filter Chips (All, Favorites, Family, Places, Childhood, Festivals, etc.)
         SingleChildScrollView(
@@ -314,6 +372,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
                 onSelected: (sel) {
                   setState(() {
                     _onlyFavorites = sel;
+                    if (sel) _selectedCategoryFilter = 'all';
                   });
                   _loadMemories();
                 },
@@ -340,6 +399,52 @@ class _MemoryScreenState extends State<MemoryScreen> {
                 );
               }),
             ],
+          ),
+        ),
+        const SizedBox(height: 16.0),
+
+        // Quick Explore Modules Grid / Column
+        _buildQuickExploreCard(
+          icon: Icons.travel_explore_rounded,
+          title: 'Familiar World',
+          subtitle: 'Identify cultural items & traditions from Assam and the North East',
+          color: AppColors.primaryGreen,
+          isDark: isDark,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const FamiliarWorldScreen()),
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        _buildQuickExploreCard(
+          icon: Icons.wb_twilight_rounded,
+          title: 'Reminiscence Mode',
+          subtitle: 'Peaceful photo reflections & gentle conversations',
+          color: AppColors.softBlue,
+          isDark: isDark,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ReminiscenceScreen()),
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        _buildQuickExploreCard(
+          icon: Icons.library_music_rounded,
+          title: 'Memory Through Music',
+          subtitle: 'Calming melodies, familiar songs, and festival tunes',
+          color: AppColors.terracotta,
+          isDark: isDark,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const MusicMemoryScreen()),
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        _buildQuickExploreCard(
+          icon: Icons.family_restroom_rounded,
+          title: 'Family Connect',
+          subtitle: 'Contributions & loving notes added by your family',
+          color: AppColors.accentGold,
+          isDark: isDark,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const FamilyConnectScreen()),
           ),
         ),
         const SizedBox(height: 16.0),
@@ -403,7 +508,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
           ElevatedButton.icon(
             onPressed: _openAddMemory,
             icon: const Icon(Icons.add_rounded),
-            label: const Text('+ Add Memory', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+            label: Text(AppStrings.get('addMemory', locale: loc), style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
             style: ElevatedButton.styleFrom(
               backgroundColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
               foregroundColor: isDark ? AppColors.darkBackground : Colors.white,
