@@ -1,13 +1,13 @@
-# SMRITI — Voice Interaction Architecture ("Talk to Me")
+# BANDHU — Voice Interaction Architecture ("Talk to Me")
 
 **Phase 07 Technical Specification**  
-**Team**: THE DEBUGGERS | **SIH26003** | **Project**: SMRITI — AI Cognitive Care Companion
+**Team**: THE DEBUGGERS | **SIH26003** | **Project**: BANDHU — AI Cognitive Care Companion
 
 ---
 
 ## 1. Executive Summary & Design Philosophy
 
-The SMRITI Voice Interaction pipeline ("Talk to Me") provides an intuitive, hands-free conversational layer for elderly individuals experiencing mild cognitive impairment (MCI) or early-stage dementia.
+The BANDHU Voice Interaction pipeline ("Talk to Me") provides an intuitive, hands-free conversational layer for elderly individuals experiencing mild cognitive impairment (MCI) or early-stage dementia.
 
 ### Core Architectural Principles:
 1. **Voice is Optional, Touch is Universal**:
@@ -27,10 +27,10 @@ The SMRITI Voice Interaction pipeline ("Talk to Me") provides an intuitive, hand
 
 ## 2. 9 Supported Languages & Voice Capability Matrix
 
-SMRITI supports **9 regional languages of India**, with special emphasis on the North-Eastern Region (NER) and major Indian languages.
+BANDHU supports **9 regional languages of India**, with special emphasis on the North-Eastern Region (NER) and major Indian languages.
 
 > [!IMPORTANT]
-> SMRITI strictly defines **9 supported languages**. In accordance with clinical and software verification standards, capabilities are explicitly divided into:
+> BANDHU strictly defines **9 supported languages**. In accordance with clinical and software verification standards, capabilities are explicitly divided into:
 > - **Fully Translation-Verified**: Complete human review of all UI and conversational strings.
 > - **Architecturally Supported / Translation Review Required**: Localization pipeline and starter lexicons in place, awaiting secondary native speaker review.
 > - **Verified on Device**: Tested and confirmed working on the Android target platform.

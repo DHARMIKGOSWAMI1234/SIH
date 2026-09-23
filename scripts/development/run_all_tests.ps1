@@ -1,6 +1,6 @@
-# SMRITI Automated Cross-Component Test Runner
+# BANDHU Automated Cross-Component Test Runner
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "         SMRITI - COMPREHENSIVE VERIFICATION RUNNER         " -ForegroundColor Cyan
+Write-Host "         BANDHU - COMPREHENSIVE VERIFICATION RUNNER         " -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -42,5 +42,5 @@ Write-Host "      QR generation PASSED." -ForegroundColor Green
 Write-Host ""
 
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "  ALL SMRITI PHASE 01, 02, 03 & 04 TESTS AND CHECKS PASSED! " -ForegroundColor Green
+Write-Host "  ALL BANDHU PHASE 01, 02, 03 & 04 TESTS AND CHECKS PASSED! " -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Cyan

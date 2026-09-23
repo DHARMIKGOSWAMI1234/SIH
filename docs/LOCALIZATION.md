@@ -1,8 +1,8 @@
-# SMRITI — Multilingual Localization System (Phase 07)
+# BANDHU — Multilingual Localization System (Phase 07)
 
 ## 1. Overview & Language Count
 
-SMRITI strictly supports **9 languages** of India and the North Eastern Region (NER). There is NO 10th language.
+BANDHU strictly supports **9 languages** of India and the North Eastern Region (NER). There is NO 10th language.
 
 The 9 supported languages are:
 

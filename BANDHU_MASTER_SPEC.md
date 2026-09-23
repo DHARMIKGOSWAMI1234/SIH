@@ -1,4 +1,4 @@
-# SMRITI — MASTER ENGINEERING SPECIFICATION (v1.0.0)
+# BANDHU — MASTER ENGINEERING SPECIFICATION (v1.0.0)
 ## SIH26003: AI-Based Cognitive Gaming and Memory Assistance Platform for Elderly Dementia Patients in North Eastern Region (NER)
 ### Organization: Ministry of Development of North Eastern Region (MDoNER)
 
@@ -7,20 +7,20 @@
 ## 1. Executive Summary & Clinical Boundaries
 
 ### 1.1 Project Purpose
-SMRITI is an offline-first, culturally familiar cognitive activity, routine tracking, and memory assistance application engineered specifically for the elderly population in India's North Eastern Region (NER). It pairs a highly accessible, calm patient mobile application with an explainable adaptive difficulty engine, local SQLite persistence, and a caregiver transparency dashboard.
+BANDHU is an offline-first, culturally familiar cognitive activity, routine tracking, and memory assistance application engineered specifically for the elderly population in India's North Eastern Region (NER). It pairs a highly accessible, calm patient mobile application with an explainable adaptive difficulty engine, local SQLite persistence, and a caregiver transparency dashboard.
 
 ### 1.2 Strict Clinical Boundary Notice
 > [!IMPORTANT]
-> **SMRITI IS NOT A DIAGNOSTIC TOOL, CLINICAL PREDICTOR, OR MEDICAL DEVICE.**
+> **BANDHU IS NOT A DIAGNOSTIC TOOL, CLINICAL PREDICTOR, OR MEDICAL DEVICE.**
 >
-> - **SMRITI IS NOT:**
+> - **BANDHU IS NOT:**
 >   - A dementia diagnostic system
 >   - A dementia risk/severity predictor
 >   - A medical diagnosis or neurologist replacement
 >   - A medical advice chatbot
 >   - A treatment, cure, or clinical decision support system
 >
-> - **SMRITI IS:**
+> - **BANDHU IS:**
 >   - A cognitive activity and engagement platform
 >   - A memory assistance and daily routine tool
 >   - An accessible reminder system
@@ -37,7 +37,7 @@ SMRITI is an offline-first, culturally familiar cognitive activity, routine trac
 
 ### 2.1 Monorepo Layout
 ```
-SMRITI-SIH26003/
+BANDHU-SIH26003/
 ├── apps/
 │   ├── patient_app/             # Flutter (Dart) elderly-first mobile & web client
 │   └── caregiver_dashboard/     # React (TypeScript) dashboard foundation
@@ -68,7 +68,8 @@ SMRITI-SIH26003/
 ├── .gitignore
 ├── .env.example
 ├── README.md
-└── SMRITI_MASTER_SPEC.md
+├── BANDHU_PND.pdf
+└── BANDHU_MASTER_SPEC.md
 ```
 
 ### 2.2 Core Tech Stack
@@ -215,7 +216,7 @@ SMRITI-SIH26003/
 
 ## 5. Caregiver Intelligence & Deterministic Analytics — Phase 08 Implemented
 - **Deterministic Analytics Engine:** Pure, explainable mathematical aggregation over validated PostgreSQL activity records (`GameSession`, `Reminder`, `ReminderEvent`, `SyncOperation`).
-- **Strict Non-Clinical Boundary:** SMRITI is a non-diagnostic platform. All observations describe recorded application activity, exercise participation, and routine completion. SMRITI does not provide clinical diagnoses, dementia severity scores, disease progression predictions, clinical cognitive scores, or medication/treatment recommendations.
+- **Strict Non-Clinical Boundary:** BANDHU is a non-diagnostic platform. All observations describe recorded application activity, exercise participation, and routine completion. BANDHU does not provide clinical diagnoses, dementia severity scores, disease progression predictions, clinical cognitive scores, or medication/treatment recommendations.
 - **Metric-Specific Minimum Data Rules:**
   - Activity Participation: $\ge 2$ completed activities in current and previous periods for comparative trend (`INCREASED`, `STABLE`, `DECREASED`); otherwise `INSUFFICIENT_DATA`.
   - Game Performance: $\ge 2$ completed sessions per comparison period for trend (`IMPROVING`, `STABLE`, `DECLINING`); $\ge 1$ for current averages.

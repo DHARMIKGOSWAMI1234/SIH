@@ -1,10 +1,10 @@
-# SMRITI — Backend Synchronization & Database Architecture
+# BANDHU — Backend Synchronization & Database Architecture
 
 ## 1. Architectural Overview
 
 ```
 +-------------------------------------------------------------+
-|                 SMRITI PATIENT MOBILE APP                   |
+|                 BANDHU PATIENT MOBILE APP                   |
 |                      (Flutter / Dart)                       |
 |                                                             |
 |  +------------------+  +-----------------+  +------------+  |

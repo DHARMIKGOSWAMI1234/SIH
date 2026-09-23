@@ -1,4 +1,4 @@
-# SMRITI — DATASET & CULTURAL ASSET MANIFEST
+# BANDHU — DATASET & CULTURAL ASSET MANIFEST
 
 ## 1. Ethical Governance & Clinical Data Boundaries
 
@@ -54,7 +54,7 @@ Culturally familiar cognitive assets (cards, memories, routines) must conform to
 
 ## 3. Phase 05 Verified NER Cultural Starter Pack Provenance
 
-All cultural assets integrated into SMRITI adhere strictly to ethical data provenance, open licenses, and non-clinical reminiscence guidelines. No unverified internet scraping or copyrighted materials are present.
+All cultural assets integrated into BANDHU adhere strictly to ethical data provenance, open licenses, and non-clinical reminiscence guidelines. No unverified internet scraping or copyrighted materials are present.
 
 | Item ID | Title | Region | Category | License | Source / Archive | Attribution | Alt Text |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |

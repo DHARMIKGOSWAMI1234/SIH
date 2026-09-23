@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SMRITI Dynamic LAN IP Detection & High-Contrast QR Code Generator.
+"""BANDHU Dynamic LAN IP Detection & High-Contrast QR Code Generator.
 
 Detects the active LAN IPv4 address on the current network interface
 and generates both a high-contrast PNG and an ASCII QR code for phone testing.
@@ -68,12 +68,12 @@ def generate_qr(port: int = 8080, output_path: str = None) -> str:
         qr.add_data(target_url)
         qr.make(fit=True)
 
-        # Generate high-contrast PNG (deep navy on cream for SMRITI branding)
+        # Generate high-contrast PNG (deep navy on cream for BANDHU branding)
         img = qr.make_image(fill_color="#0F172A", back_color="#FDFBF7")
         img.save(str(output_path))
 
         print("=" * 60)
-        print(" SMRITI PHONE DEMO - LOCAL PREVIEW READY")
+        print(" BANDHU PHONE DEMO - LOCAL PREVIEW READY")
         print("=" * 60)
         print(f" Detected LAN IPv4 : {lan_ip}")
         print(f" Target Web URL    : {target_url}")
@@ -97,7 +97,7 @@ def generate_qr(port: int = 8080, output_path: str = None) -> str:
     return target_url
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate SMRITI Phone Demo QR")
+    parser = argparse.ArgumentParser(description="Generate BANDHU Phone Demo QR")
     parser.add_argument("--port", type=int, default=8080, help="Web server port (default: 8080)")
     parser.add_argument("--output", type=str, default=None, help="QR code PNG output path")
     args = parser.parse_args()

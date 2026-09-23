@@ -1,4 +1,4 @@
-# SMRITI SIH26003 — End-to-End Demo Flow Verification Walkthrough
+# BANDHU SIH26003 — End-to-End Demo Flow Verification Walkthrough
 ## Physical Android Device (FMXKV84T9D7LRSNR) → Local Drift SQLite → SyncQueue → Reconnection → FastAPI Backend → Caregiver Dashboard
 
 ### 1. Verification of Required Constraints
@@ -83,7 +83,7 @@ Logged into Caregiver API with `caregiver@smriti.care` / `Caregiver123!`:
 
 ---
 
-### 4. SMRITI Caregiver Dashboard UI/UX Simplification & Polish
+### 4. BANDHU Caregiver Dashboard UI/UX Simplification & Polish
 
 #### A. Files Modified (UI/UX Only)
 1. [`index.css`](file:///c:/Users/gmune/OneDrive/Desktop/DEMO/apps/caregiver_dashboard/src/index.css):
@@ -129,7 +129,7 @@ Logged into Caregiver API with `caregiver@smriti.care` / `Caregiver123!`:
     - Overview hero screen streamlined: removed technical badges and period switcher; rendered only 4 metric cards, Recent Cognitive Activity table, and Activity chart.
     - Renamed Activity and Reminders page headers.
     - Preserved `patients` and `progress` routes for backward compatibility.
-    - Streamlined Settings with Appearance toggle, Language selector, About SMRITI, and Clinical Boundary notice.
+    - Streamlined Settings with Appearance toggle, Language selector, About BANDHU, and Clinical Boundary notice.
 
 #### B. Verification Results
 - **TypeScript & Vite Build**: `npm run build` completed with **0 errors**.

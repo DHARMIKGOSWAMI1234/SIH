@@ -1,6 +1,6 @@
-# SMRITI — Local Phone Preview & Testing Guide
+# BANDHU — Local Phone Preview & Testing Guide
 
-This guide explains how to run the SMRITI Patient Web Application and preview it directly on any physical smartphone connected to the same local Wi-Fi network.
+This guide explains how to run the BANDHU Patient Web Application and preview it directly on any physical smartphone connected to the same local Wi-Fi network.
 
 ---
 
@@ -32,7 +32,7 @@ Run the automated launcher from the workspace root in PowerShell:
 1. Open the camera or QR code scanner app on your smartphone.
 2. Scan the QR code displayed in the terminal or open `scripts/demo/smriti_phone_demo_qr.png`.
 3. Tap the link (e.g. `http://192.168.1.15:8080`).
-4. SMRITI will load in your mobile browser.
+4. BANDHU will load in your mobile browser.
 
 ---
 

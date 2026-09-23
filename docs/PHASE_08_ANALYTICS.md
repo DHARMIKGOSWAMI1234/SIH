@@ -1,4 +1,4 @@
-# SMRITI Phase 08: Caregiver Intelligence, Analytics & Observed Trends
+# BANDHU Phase 08: Caregiver Intelligence, Analytics & Observed Trends
 
 ## 1. Executive Summary & Clinical Boundary
 
@@ -17,7 +17,7 @@ Caregiver Dashboard (React + Recharts)
 ```
 
 ### Strict Non-Clinical Boundary
-SMRITI is a **non-diagnostic platform**. All observations describe recorded application activity, exercise participation, and routine completion.
+BANDHU is a **non-diagnostic platform**. All observations describe recorded application activity, exercise participation, and routine completion.
 - **PROHIBITED**:
   - Medical diagnoses
   - Dementia severity ratings / scores

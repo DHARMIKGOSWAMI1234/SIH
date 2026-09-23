@@ -1,4 +1,4 @@
-# SMRITI One-Click Phone Demo Launcher
+# BANDHU One-Click Phone Demo Launcher
 # SIH26003: AI Cognitive Care Companion
 
 param (
@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "         SMRITI - PHONE DEMO LAUNCHER (LAN PREVIEW)         " -ForegroundColor Cyan
+Write-Host "         BANDHU - PHONE DEMO LAUNCHER (LAN PREVIEW)         " -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -46,7 +46,7 @@ $qrScript = Join-Path $ScriptPath "generate_qr.py"
 python $qrScript --port $Port
 
 # 4. Launch Flutter Web Server
-Write-Host "[4/4] Launching SMRITI Web Server..." -ForegroundColor Yellow
+Write-Host "[4/4] Launching BANDHU Web Server..." -ForegroundColor Yellow
 Write-Host "      Binding to 0.0.0.0:$Port" -ForegroundColor Cyan
 Write-Host "      Press Ctrl+C to stop the server." -ForegroundColor DarkGray
 Write-Host ""

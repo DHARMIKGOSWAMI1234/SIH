@@ -1,10 +1,10 @@
-# SMRITI — Pattern Recognition Demo & Verification Guide
+# BANDHU — Pattern Recognition Demo & Verification Guide
 ## Phase 03: Playable Sequence Recall, Local Persistence & Deterministic Adaptive Engine
 
 ---
 
 ### 1. Overview
-**Pattern Recognition** is the second core cognitive exercise in SMRITI. Designed specifically for elderly individuals in the North Eastern Region (NER), it presents calm visual rhythms of culturally familiar items (Apples, Garden Orchids, Assam Tea Cups, Warm Sun, Bamboo Leaves, Family Homes, Festival Drums, River Boats) and invites the patient to choose which picture completes the sequence.
+**Pattern Recognition** is the second core cognitive exercise in BANDHU. Designed specifically for elderly individuals in the North Eastern Region (NER), it presents calm visual rhythms of culturally familiar items (Apples, Garden Orchids, Assam Tea Cups, Warm Sun, Bamboo Leaves, Family Homes, Festival Drums, River Boats) and invites the patient to choose which picture completes the sequence.
 
 ---
 
@@ -30,7 +30,7 @@
 ### 3. Step-by-Step Gameplay Demonstration
 
 #### Step 1: Access the Exercise
-1. Launch the SMRITI app in mobile or web preview.
+1. Launch the BANDHU app in mobile or web preview.
 2. Tap the **Games** icon in the bottom navigation bar.
 3. Select the **Pattern Recognition** card ("Follow friendly visual rhythms").
 4. Review the gentle "How to Play" instructions.
@@ -74,6 +74,6 @@
 ---
 
 ### 5. Ethical & Clinical Boundaries
-- SMRITI makes **zero clinical conclusions**.
+- BANDHU makes **zero clinical conclusions**.
 - All performance data is stored as non-clinical engagement indicators (`accuracy`, `score`, `responseTimeMs`).
 - Prohibited clinical terms (`"dementia"`, `"decline"`, `"diagnosis"`, `"impairment"`) are strictly banned by automated unit tests.

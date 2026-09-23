@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-The SMRITI project (SIH26003) requires an elderly-friendly, culturally familiar cognitive activity and memory assistance platform designed for the North Eastern Region (NER). Key operational constraints include:
+The BANDHU project (SIH26003) requires an elderly-friendly, culturally familiar cognitive activity and memory assistance platform designed for the North Eastern Region (NER). Key operational constraints include:
 - Unreliable internet connectivity across rural/semi-urban NER areas.
 - Elderly users with diverse motor and visual capabilities.
 - Strict clinical boundaries (no medical diagnosis or predictive claims).

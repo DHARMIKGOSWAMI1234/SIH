@@ -1,12 +1,12 @@
-# SMRITI — Memory Match Game Demonstration & Verification Guide
+# BANDHU — Memory Match Game Demonstration & Verification Guide
 
-This document provides complete instructions for demonstrating and verifying the **Memory Match** cognitive activity in SMRITI.
+This document provides complete instructions for demonstrating and verifying the **Memory Match** cognitive activity in BANDHU.
 
 ---
 
 ## 1. Clinical Boundary Notice
 > [!IMPORTANT]
-> **SMRITI Memory Match is an assistive cognitive stimulation and engagement activity.**
+> **BANDHU Memory Match is an assistive cognitive stimulation and engagement activity.**
 > It is **NOT** a dementia diagnostic test, severity score, or clinical evaluation.
 > All terminology, scoring, and adaptive engine recommendations reflect game performance and engagement comfort only.
 

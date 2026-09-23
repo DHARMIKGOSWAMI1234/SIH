@@ -1,10 +1,10 @@
-# SMRITI System Architecture Specification
+# BANDHU System Architecture Specification
 
 ## 1. Overview & Diagram
 
 ```
 +-------------------------------------------------------------+
-|                 SMRITI PATIENT MOBILE APP                   |
+|                 BANDHU PATIENT MOBILE APP                   |
 |                      (Flutter / Dart)                       |
 |                                                             |
 |  +------------------+  +-----------------+  +------------+  |
@@ -277,7 +277,7 @@ Caregiver Dashboard (React / TypeScript)
 ## 7. Phase 07 Multilingual Localization & Voice Interaction Architecture
 
 ### 7.1 9 Supported Languages & Verification Framework
-SMRITI supports exactly **9 regional languages of India and the North Eastern Region**:
+BANDHU supports exactly **9 regional languages of India and the North Eastern Region**:
 1. **English (`en`)**: Fully Translation-Verified.
 2. **Hindi (`hi`)**: Fully Translation-Verified.
 3. **Assamese (`as`)**: Fully Translation-Verified.
@@ -306,7 +306,7 @@ SMRITI supports exactly **9 regional languages of India and the North Eastern Re
 
 ### 8.1 Core Principle & Clinical Boundary
 Patient activity recorded in offline SQLite is synced idempotently to PostgreSQL. The deterministic analytics engine aggregates this data into caregiver-facing insights.
-- **Strict Non-Clinical Boundary**: SMRITI does not perform diagnostic scoring, dementia severity assessment, disease progression forecasting, or medical/treatment prescription.
+- **Strict Non-Clinical Boundary**: BANDHU does not perform diagnostic scoring, dementia severity assessment, disease progression forecasting, or medical/treatment prescription.
 - All metrics describe observed application activity, cognitive game comfort, and routine completion.
 
 ### 8.2 Metric-Specific Data Sufficiency & Trend Directionality
