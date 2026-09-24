@@ -183,18 +183,27 @@ class _LoginScreenState extends State<LoginScreen> {
             // Header
             Row(
               children: [
-                Container(
-                  width: 56.0,
-                  height: 56.0,
-                  decoration: BoxDecoration(
-                    color: isDark ? AppColors.darkSoftBlue : const Color(0xFFEDE9DE),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: borderColor, width: 1.5),
-                  ),
-                  child: Icon(
-                    Icons.lock_outline_rounded,
-                    color: primaryColor,
-                    size: 30.0,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: Image.asset(
+                    'assets/branding/bandhu_emblem.png',
+                    width: 56.0,
+                    height: 56.0,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      width: 56.0,
+                      height: 56.0,
+                      decoration: BoxDecoration(
+                        color: isDark ? AppColors.darkSoftBlue : const Color(0xFFEDE9DE),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: borderColor, width: 1.5),
+                      ),
+                      child: Icon(
+                        Icons.lock_outline_rounded,
+                        color: primaryColor,
+                        size: 30.0,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16.0),

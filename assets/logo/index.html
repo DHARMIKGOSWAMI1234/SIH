@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BANDHU — Brand Identity & Scalable Logo System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FAF8F5;
+      --bg-card: #FFFFFF;
+      --teal-primary: #0F4C5C;
+      --teal-deep: #08232B;
+      --teal-light: #1A6B80;
+      --sage-primary: #6E9B85;
+      --sage-muted: #8DB69F;
+      --sage-light: #E7EFEA;
+      --text-main: #1D2D35;
+      --text-muted: #5F7470;
+      --border-subtle: #E8E2D9;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 40px 24px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--sage-light);
+      color: var(--teal-primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--teal-primary);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .theme-selector {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .theme-btn {
+      border: 1px solid var(--border-subtle);
+      background: white;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn.active, .theme-btn:hover {
+      background: var(--teal-primary);
+      color: white;
+      border-color: var(--teal-primary);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(15, 76, 92, 0.04);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--teal-primary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .preview-box {
+      border-radius: var(--radius-md);
+      padding: 40px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+      background: var(--bg-cream);
+      border: 1px dashed var(--border-subtle);
+      transition: background 0.3s ease;
+    }
+
+    .preview-box.dark {
+      background: #08232B;
+    }
+
+    .preview-box.white {
+      background: #FFFFFF;
+    }
+
+    .preview-box.checker {
+      background-image: linear-gradient(45deg, #eee 25%, transparent 25%), linear-gradient(-45deg, #eee 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #eee 75%), linear-gradient(-45deg, transparent 75%, #eee 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      background-color: #fdfdfd;
+    }
+
+    .logo-render {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.04));
+    }
+
+    .download-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.88rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--teal-primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #0B3C49;
+    }
+
+    .btn-secondary {
+      background: var(--sage-light);
+      color: var(--teal-primary);
+      border: 1px solid transparent;
+    }
+
+    .btn-secondary:hover {
+      background: #d6e5dc;
+    }
+
+    /* Concept comparison */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .concept-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .concept-img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+    }
+
+    /* Scales section */
+    .scales-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 24px;
+      background: white;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 40px;
+      overflow-x: auto;
+    }
+
+    .scale-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scale-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Palette */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .color-swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: white;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .color-box {
+      height: 90px;
+      width: 100%;
+    }
+
+    .color-meta {
+      padding: 12px;
+    }
+
+    .color-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .color-hex {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    /* Breakdown */
+    .symbol-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      background: white;
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 40px;
+    }
+
+    .symbol-item h4 {
+      color: var(--teal-primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .symbol-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">Brand Identity System</div>
+      <h1>BANDHU</h1>
+      <p class="subtitle">AI Cognitive Care Companion — Scalable Vector Brand Identity, App Icons, and Visual Guidelines</p>
+
+      <div class="theme-selector">
+        <button class="theme-btn active" onclick="setBoxBg('cream')">Warm Cream</button>
+        <button class="theme-btn" onclick="setBoxBg('white')">Pure White</button>
+        <button class="theme-btn" onclick="setBoxBg('dark')">Midnight Teal</button>
+        <button class="theme-btn" onclick="setBoxBg('checker')">Transparent</button>
+      </div>
+    </header>
+
+    <!-- Main SVG Logo Formats -->
+    <div class="grid-2">
+      <!-- Full Stacked Logo -->
+      <div class="card">
+        <div class="card-title">
+          <span>Primary Brandmark (Stacked)</span>
+          <span style="font-size: 0.8rem; font-weight: 500; color: var(--sage-primary);">SVG Vector</span>
+        </div>
+        <p class="card-desc">Complete brandmark with central caring emblem, bold modern sans-serif typography, and cognitive companion tagline.</p>
+        <div class="preview-box" id="box-1">
+          <img src="bandhu-logo-full.svg" alt="BANDHU Full Logo" class="logo-render" style="max-height: 280px;">
+        </div>
+        <div class="download-actions">
+          <a href="bandhu-logo-full.svg" download="bandhu-logo-full.svg" class="btn btn-primary">Download SVG</a>
+          <button onclick="copySvg('bandhu-logo-full.svg')" class="btn btn-secondary">Copy SVG Code</button>
+        </div>
+      </div>
+
+      <!-- Horizontal Navbar Logo -->
+      <div class="card">
+        <div class="card-title">
+          <span>Horizontal Lockup</span>
+          <span style="font-size: 0.8rem; font-weight: 500; color: var(--sage-primary);">Navigation & Headers</span>
+        </div>
+        <p class="card-desc">Engineered for caregiver dashboard app bars, website navbars, and header banners.</p>
+        <div class="preview-box" id="box-2">
+          <img src="bandhu-logo-horizontal.svg" alt="BANDHU Horizontal Logo" class="logo-render" style="max-height: 100px;">
+        </div>
+        <div class="download-actions">
+          <a href="bandhu-logo-horizontal.svg" download="bandhu-logo-horizontal.svg" class="btn btn-primary">Download SVG</a>
+          <button onclick="copySvg('bandhu-logo-horizontal.svg')" class="btn btn-secondary">Copy SVG Code</button>
+        </div>
+      </div>
+
+      <!-- Standalone Emblem -->
+      <div class="card">
+        <div class="card-title">
+          <span>Standalone Emblem</span>
+          <span style="font-size: 0.8rem; font-weight: 500; color: var(--sage-primary);">Emblem Only</span>
+        </div>
+        <p class="card-desc">The pure continuous embrace shape, silver-haired elder, caring AI silhouette, neural orbit node, and memory leaf.</p>
+        <div class="preview-box" id="box-3">
+          <img src="bandhu-emblem.svg" alt="BANDHU Standalone Emblem" class="logo-render" style="max-height: 220px;">
+        </div>
+        <div class="download-actions">
+          <a href="bandhu-emblem.svg" download="bandhu-emblem.svg" class="btn btn-primary">Download SVG</a>
+          <button onclick="copySvg('bandhu-emblem.svg')" class="btn btn-secondary">Copy SVG Code</button>
+        </div>
+      </div>
+
+      <!-- App Icon Squircle -->
+      <div class="card">
+        <div class="card-title">
+          <span>Mobile App Icon</span>
+          <span style="font-size: 0.8rem; font-weight: 500; color: var(--sage-primary);">iOS / Android / PWA</span>
+        </div>
+        <p class="card-desc">Optimized for mobile home screens, Google Play Store, and Apple App Store in light and dark variants.</p>
+        <div class="preview-box" id="box-4" style="gap: 20px;">
+          <img src="bandhu-app-icon.svg" alt="BANDHU App Icon Light" class="logo-render" style="width: 120px; height: 120px;">
+          <img src="bandhu-app-icon-dark.svg" alt="BANDHU App Icon Dark" class="logo-render" style="width: 120px; height: 120px;">
+        </div>
+        <div class="download-actions">
+          <a href="bandhu-app-icon.svg" download="bandhu-app-icon.svg" class="btn btn-primary">Download Light Icon</a>
+          <a href="bandhu-app-icon-dark.svg" download="bandhu-app-icon-dark.svg" class="btn btn-secondary">Download Dark Icon</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scalability Inspection (16px to 256px) -->
+    <h3 style="margin-bottom: 12px; color: var(--teal-primary);">App Icon Legibility at Micro-Scales</h3>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Ensuring the silhouette remains immediately recognizable from tiny 16px favicons to high-density Retina app displays:</p>
+    <div class="scales-row">
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 16px; height: 16px; border-radius: 3px;">
+        <span class="scale-label">16px (Favicon)</span>
+      </div>
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 24px; height: 24px; border-radius: 5px;">
+        <span class="scale-label">24px</span>
+      </div>
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 32px; height: 32px; border-radius: 7px;">
+        <span class="scale-label">32px (Toolbar)</span>
+      </div>
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 48px; height: 48px; border-radius: 11px;">
+        <span class="scale-label">48px (Watch)</span>
+      </div>
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 64px; height: 64px; border-radius: 14px;">
+        <span class="scale-label">64px (Phone)</span>
+      </div>
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 96px; height: 96px; border-radius: 20px;">
+        <span class="scale-label">96px (Tablet)</span>
+      </div>
+      <div class="scale-item">
+        <img src="bandhu-app-icon.svg" style="width: 140px; height: 140px; border-radius: 28px;">
+        <span class="scale-label">140px (Store)</span>
+      </div>
+    </div>
+
+    <!-- Symbol Meaning Breakdown -->
+    <h3 style="margin-bottom: 12px; color: var(--teal-primary);">Design Metaphor & Geometry Breakdown</h3>
+    <div class="symbol-breakdown">
+      <div class="symbol-item">
+        <h4>🌿 Botanical Leaf</h4>
+        <p>A graceful sage green leaf springing organically from the embrace ribbon, symbolizing cognitive memory retention, natural healing, and flourishing vitality.</p>
+      </div>
+      <div class="symbol-item">
+        <h4>🤍 Continuous Heart Embrace</h4>
+        <p>A flowing vector contour creating a supportive heart, holding the elderly loved one in complete safety, emotional warmth, and dignity.</p>
+      </div>
+      <div class="symbol-item">
+        <h4>💡 Neural Orbit & Tech Node</h4>
+        <p>A refined elliptical trajectory carrying a glowing neural connection point, expressing proactive AI monitoring, cognitive network care, and smart companionship.</p>
+      </div>
+      <div class="symbol-item">
+        <h4>👵 Supportive Companionship</h4>
+        <p>Minimalist silhouettes featuring an elderly figure with recognizable soft silver hair resting comfortably beside the caring AI presence, culturally neutral and friendly.</p>
+      </div>
+    </div>
+
+    <!-- Color Palette -->
+    <h3 style="margin-bottom: 12px; color: var(--teal-primary);">Official Color Palette</h3>
+    <div class="palette-grid">
+      <div class="color-swatch">
+        <div class="color-box" style="background: #0B3C49;"></div>
+        <div class="color-meta">
+          <div class="color-name">Deep Teal</div>
+          <div class="color-hex">#0B3C49</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-box" style="background: #145E6F;"></div>
+        <div class="color-meta">
+          <div class="color-name">Cognitive Teal</div>
+          <div class="color-hex">#145E6F</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-box" style="background: #5E8C76;"></div>
+        <div class="color-meta">
+          <div class="color-name">Sage Green</div>
+          <div class="color-hex">#5E8C76</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-box" style="background: #8DB69F;"></div>
+        <div class="color-meta">
+          <div class="color-name">Vitality Sage</div>
+          <div class="color-hex">#8DB69F</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-box" style="background: #FAF8F5;"></div>
+        <div class="color-meta">
+          <div class="color-name">Warm Cream</div>
+          <div class="color-hex">#FAF8F5</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-box" style="background: #D5E2DA;"></div>
+        <div class="color-meta">
+          <div class="color-name">Silver Sage (Hair)</div>
+          <div class="color-hex">#D5E2DA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Rendered Exploration Concepts -->
+    <h3 style="margin-bottom: 12px; color: var(--teal-primary);">High-Fidelity Visual Concepts</h3>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Photorealistic / 3D rendered concept explorations generated to complement the vector SVG identity:</p>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <img src="bandhu_logo_concept_1.jpg" alt="Concept 1" class="concept-img">
+        <h4 style="color: var(--teal-primary); margin-bottom: 4px;">Concept 1: Warm Caring Embrace</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Emphasizing the gentle heart embrace with botanical growth and orbital neural connection node.</p>
+      </div>
+      <div class="concept-card">
+        <img src="bandhu_logo_concept_2.jpg" alt="Concept 2" class="concept-img">
+        <h4 style="color: var(--teal-primary); margin-bottom: 4px;">Concept 2: Minimalist App Icon Silhouette</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Focused ribbon geometry, high contrast silhouette, and clean rounded typographic lockup.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function setBoxBg(type) {
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const boxes = document.querySelectorAll('.preview-box');
+      boxes.forEach(box => {
+        box.classList.remove('cream', 'white', 'dark', 'checker');
+        if (type !== 'cream') {
+          box.classList.add(type);
+        }
+      });
+    }
+
+    async function copySvg(filename) {
+      try {
+        const response = await fetch(filename);
+        const text = await response.text();
+        await navigator.clipboard.writeText(text);
+        alert('SVG code copied to clipboard!');
+      } catch (err) {
+        alert('Could not copy automatically. You can right-click the file and open in your editor.');
+      }
+    }
+  </script>
+</body>
+</html>

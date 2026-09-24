@@ -5,7 +5,6 @@ import {
   Brain,
   Clock,
   Settings,
-  Shield,
   X,
   LucideIcon,
 } from 'lucide-react';
@@ -55,13 +54,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-header">
-          <div className="brand-badge">
-            <div className="brand-icon">
-              <Shield size={18} />
-            </div>
+          <div className="brand-badge" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <img
+              src="/assets/branding/bandhu_emblem.png"
+              alt="BANDHU Emblem"
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                objectFit: 'cover',
+                flexShrink: 0,
+              }}
+              onError={(e) => {
+                (e.target as HTMLElement).style.display = 'none';
+              }}
+            />
             <div>
-              <div className="brand-title">BANDHU</div>
-              <div className="brand-subtitle">Caregiver Portal</div>
+              <div className="brand-title" style={{ fontSize: '17px', fontWeight: 800, letterSpacing: '0.04em', color: 'var(--brand-primary, #0F4C5C)' }}>BANDHU</div>
+              <div className="brand-subtitle" style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted, #64748b)' }}>AI Care Companion</div>
             </div>
           </div>
           <button className="sidebar-close-btn" onClick={onClose} aria-label="Close menu">

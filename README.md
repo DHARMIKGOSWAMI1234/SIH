@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="assets/branding/bandhu_logo.png" alt="BANDHU — AI Cognitive Care Companion" width="460">
+</p>
+
 # BANDHU — AI Cognitive Care Companion
+
+> **"BANDHU provides cognitive activities, memory assistance, reminders, and activity insights. It does not diagnose or treat dementia."**
 
 ### SIH26003: AI-Based Cognitive Gaming and Memory Assistance Platform for Elderly Dementia Patients in North Eastern Region (NER)
 **Ministry of Development of North Eastern Region (MDoNER)**

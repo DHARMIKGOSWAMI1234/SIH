@@ -268,47 +268,65 @@ class _SmritiAppShellState extends State<SmritiAppShell> {
         backgroundColor: isDark ? AppColors.darkBackground : AppColors.lightBackground,
         elevation: 0,
         titleSpacing: 16.0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              AppStrings.get('appName', locale: currentLocale),
-              style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-                color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                'assets/branding/bandhu_emblem.png',
+                width: 32.0,
+                height: 32.0,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
             ),
-            const SizedBox(height: 2.0),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 8.0,
-                  height: 8.0,
-                  decoration: const BoxDecoration(
-                    color: AppColors.successGreen,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 6.0),
-                Flexible(
-                  child: Text(
-                    AppStrings.get('offlineReady', locale: currentLocale),
+            const SizedBox(width: 10.0),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppStrings.get('appName', locale: currentLocale),
                     style: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 2.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 8.0,
+                        height: 8.0,
+                        decoration: const BoxDecoration(
+                          color: AppColors.successGreen,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 6.0),
+                      Flexible(
+                        child: Text(
+                          AppStrings.get('offlineReady', locale: currentLocale),
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w600,
+                            color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

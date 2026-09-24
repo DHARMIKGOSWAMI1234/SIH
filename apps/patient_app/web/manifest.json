@@ -1,11 +1,11 @@
 {
-    "name": "patient_app",
-    "short_name": "patient_app",
+    "name": "BANDHU — AI Cognitive Care Companion",
+    "short_name": "BANDHU",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FAF8F5",
+    "theme_color": "#0F4C5C",
+    "description": "BANDHU — AI Cognitive Care Companion",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

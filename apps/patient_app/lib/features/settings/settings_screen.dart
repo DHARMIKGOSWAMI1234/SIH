@@ -522,7 +522,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
-          const SizedBox(height: 32.0),
+          const SizedBox(height: 24.0),
+
+          // BANDHU Brand Badge
+          Center(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: Image.asset(
+                    'assets/branding/bandhu_logo.png',
+                    width: 110.0,
+                    height: 110.0,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  AppStrings.get('appName', locale: currentLocale),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: textPrimary,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+                Text(
+                  AppStrings.get('tagline', locale: currentLocale),
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    color: textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 4.0),
+                Text(
+                  'v1.0.0 • Offline-First Cognitive Care',
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: textSecondary.withValues(alpha: 0.7),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24.0),
 
           // 6. ACCOUNT & SESSION (Visually Separated)
           Divider(color: borderColor, thickness: 1.5),

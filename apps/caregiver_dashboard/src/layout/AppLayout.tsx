@@ -62,6 +62,36 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
         <main className="main-scroll-area">
           <div className="main-content-inner">{children}</div>
+          <footer
+            style={{
+              padding: '20px 32px',
+              borderTop: '1px solid var(--border-subtle)',
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '12px',
+              fontSize: '12.5px',
+              color: 'var(--text-muted)',
+              background: 'var(--bg-surface)',
+              marginTop: '32px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <img
+                src="/assets/branding/bandhu_emblem.png"
+                alt="BANDHU"
+                style={{ width: '20px', height: '20px', borderRadius: '4px' }}
+                onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+              />
+              <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>
+                BANDHU — AI Cognitive Care Companion
+              </span>
+            </div>
+            <div>
+              Caregiver Intelligence & Transparency Portal • Non-Diagnostic Cognitive Health Platform
+            </div>
+          </footer>
         </main>
       </div>
     </div>

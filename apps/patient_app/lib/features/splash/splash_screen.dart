@@ -54,24 +54,33 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 120.0,
-                height: 120.0,
-                decoration: BoxDecoration(
-                  color: SmritiTheme.restorativeSage,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: SmritiTheme.restorativeSage.withValues(alpha: 0.25),
-                      blurRadius: 24.0,
-                      offset: const Offset(0, 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(32.0),
+                child: Image.asset(
+                  'assets/branding/bandhu_emblem.png',
+                  width: 130.0,
+                  height: 130.0,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: 120.0,
+                    height: 120.0,
+                    decoration: BoxDecoration(
+                      color: SmritiTheme.restorativeSage,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: SmritiTheme.restorativeSage.withValues(alpha: 0.25),
+                          blurRadius: 24.0,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.spa_rounded,
-                  size: 64.0,
-                  color: Colors.white,
+                    child: const Icon(
+                      Icons.spa_rounded,
+                      size: 64.0,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 32.0),

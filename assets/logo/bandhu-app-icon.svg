@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient (Warm Cream to Soft Pearl) -->
+    <linearGradient id="iconBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCFAF7" />
+      <stop offset="100%" stop-color="#F3EFEA" />
+    </linearGradient>
+
+    <!-- Squircle Clip -->
+    <clipPath id="squircle">
+      <rect x="0" y="0" width="512" height="512" rx="115" ry="115" />
+    </clipPath>
+
+    <linearGradient id="aiTealGrad" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#0B3C49" />
+      <stop offset="100%" stop-color="#145E6F" />
+    </linearGradient>
+
+    <linearGradient id="aiSageGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4E7865" />
+      <stop offset="60%" stop-color="#6F9D87" />
+      <stop offset="100%" stop-color="#8DB69F" />
+    </linearGradient>
+
+    <linearGradient id="aiOrbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8DB69F" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#5E8C76" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#145E6F" stop-opacity="0.9" />
+    </linearGradient>
+
+    <radialGradient id="aiNodeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#A4E2C6" stop-opacity="1" />
+      <stop offset="50%" stop-color="#5E8C76" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#5E8C76" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- SQUIRCLE APP ICON CONTAINER -->
+  <g clip-path="url(#squircle)">
+    <!-- Background -->
+    <rect x="0" y="0" width="512" height="512" fill="url(#iconBgGrad)" />
+
+    <!-- Subtle Premium Inner Border -->
+    <rect x="1.5" y="1.5" width="509" height="509" rx="114" ry="114" fill="none" stroke="#E6E0D8" stroke-width="2" />
+
+    <!-- Centered Emblem -->
+    <g transform="translate(36, 40) scale(0.88)">
+      <!-- Neural Orbit Arc -->
+      <path d="M 125,275 C 95,220 110,135 180,85 C 240,40 330,48 385,100 C 428,140 435,210 395,275 C 360,332 290,395 250,420" 
+            fill="none" stroke="url(#aiOrbitGrad)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="320 8 4 8" />
+
+      <!-- Neural Orbit Node -->
+      <circle cx="398" cy="120" r="16" fill="url(#aiNodeGlow)" />
+      <circle cx="398" cy="120" r="7" fill="#145E6F" />
+      <circle cx="398" cy="120" r="4" fill="#C8EADB" />
+
+      <circle cx="118" cy="245" r="4.5" fill="#6F9D87" opacity="0.85" />
+      <circle cx="118" cy="245" r="2.2" fill="#FAF8F5" />
+
+      <!-- Right Embrace Arm (Companion / Sage Green) -->
+      <path d="M 250,410 
+               C 285,385 355,330 380,265 
+               C 405,200 390,130 340,95 
+               C 295,65 245,95 245,135 
+               C 245,175 285,195 320,185 
+               C 345,178 358,155 350,135 
+               C 335,100 290,85 255,115
+               C 280,105 315,110 330,135
+               C 340,152 328,172 305,176
+               C 275,182 235,160 235,125
+               C 235,80 290,45 348,78
+               C 408,112 425,190 395,260
+               C 368,322 300,378 250,410 Z" 
+            fill="url(#aiSageGrad)" />
+
+      <!-- Left Embrace Arm (Teal) -->
+      <path d="M 250,410 
+               C 205,378 135,320 108,255 
+               C 80,188 95,112 158,78 
+               C 200,55 242,75 250,115 
+               C 242,88 208,72 170,88 
+               C 120,110 102,175 125,238 
+               C 148,298 210,355 250,388 
+               C 256,383 252,408 250,410 Z" 
+            fill="url(#aiTealGrad)" />
+
+      <path d="M 235,396 C 245,412 255,412 265,396 C 255,404 245,404 235,396 Z" fill="#0B3C49" />
+
+      <!-- Leaf Motif -->
+      <g transform="translate(112, 140) rotate(-22)">
+        <path d="M 0,40 C -15,25 -25,-5 5,-30 C 20,-5 20,20 0,40 Z" fill="#6F9D87" />
+        <path d="M 0,38 C 2,15 4,-5 5,-28" stroke="#FAF8F5" stroke-width="1.8" stroke-linecap="round" opacity="0.7" fill="none" />
+        <path d="M -8,18 C -22,12 -28,-2 -12,-16 C -2,0 0,10 -8,18 Z" fill="#8DB69F" opacity="0.9" />
+      </g>
+
+      <!-- Companion Silhouette -->
+      <circle cx="295" cy="195" r="23" fill="#4E7865" />
+      <path d="M 295,225 
+               C 315,228 335,245 338,275 
+               L 338,325 
+               C 325,330 305,332 290,320 
+               L 290,265 
+               C 278,262 258,266 242,282 
+               C 236,288 228,284 230,276 
+               C 236,252 262,235 295,225 Z" 
+            fill="#5E8C76" />
+
+      <!-- Elder Silhouette -->
+      <circle cx="218" cy="225" r="21" fill="#0B3C49" />
+      <path d="M 200,222 
+               C 198,202 214,194 230,198 
+               C 240,201 245,210 244,218 
+               C 238,212 230,208 218,210 
+               C 208,212 203,218 200,222 Z" 
+            fill="#D5E2DA" />
+      <circle cx="199" cy="216" r="7.5" fill="#D5E2DA" />
+      <path d="M 226,250 
+               C 245,255 252,275 252,310 
+               C 242,328 220,335 198,328 
+               C 188,320 182,300 185,280 
+               C 188,260 205,248 226,250 Z" 
+            fill="#0F4C5C" />
+
+      <path d="M 225,280 C 235,270 252,270 262,282" stroke="#FAF8F5" stroke-width="3" stroke-linecap="round" opacity="0.4" fill="none" />
+    </g>
+  </g>
+</svg>

@@ -29,7 +29,7 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     description=(
-        "SMRITI Backend API for Cognitive Activity, Routine Support, and Caregiver Transparency. "
+        "BANDHU Backend API for Cognitive Activity, Routine Support, and Caregiver Transparency. "
         "Strict clinical boundary: This system does NOT perform medical diagnosis or predictive modeling."
     ),
     openapi_url="/openapi.json",

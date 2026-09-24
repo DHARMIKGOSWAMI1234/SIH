@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, HeartHandshake, UserPlus, LogIn, AlertCircle } from 'lucide-react';
+import { HeartHandshake, UserPlus, LogIn, AlertCircle } from 'lucide-react';
 
 export const LoginScreen: React.FC = () => {
   const { login, register } = useAuth();
@@ -67,14 +67,26 @@ export const LoginScreen: React.FC = () => {
       <div style={{ width: '100%', maxWidth: '420px', backgroundColor: 'var(--bg-surface)', borderRadius: '16px', border: '1px solid var(--border-subtle)', boxShadow: '0 8px 30px rgba(0,0,0,0.06)', padding: '36px 32px' }}>
         {/* Brand Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{ width: '56px', height: '56px', backgroundColor: '#e8f3ec', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#3b7a57', marginBottom: '16px' }}>
-            <ShieldCheck size={28} />
-          </div>
-          <h1 style={{ fontSize: '22px', fontWeight: 'bold', color: 'var(--text-main)', margin: 0 }}>
-            BANDHU Caregiver Portal
+          <img
+            src="/assets/branding/bandhu_logo.png"
+            alt="BANDHU — AI Cognitive Care Companion"
+            style={{
+              width: '130px',
+              height: '130px',
+              objectFit: 'contain',
+              borderRadius: '20px',
+              marginBottom: '14px',
+              boxShadow: '0 4px 16px rgba(15, 76, 92, 0.08)',
+            }}
+          />
+          <h1 style={{ fontSize: '24px', fontWeight: 'bold', letterSpacing: '0.02em', color: 'var(--text-main)', margin: 0 }}>
+            BANDHU
           </h1>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '6px' }}>
-            {isRegister ? 'Create your caregiver account' : 'Sign in to access synchronized activity monitoring'}
+          <div style={{ fontSize: '13.5px', fontWeight: 600, color: '#0F4C5C', marginTop: '4px', letterSpacing: '0.04em' }}>
+            AI Cognitive Care Companion
+          </div>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '6px' }}>
+            {isRegister ? 'Caregiver Registration & Transparency Portal' : 'Caregiver Portal • Sign in to access synchronized activity monitoring'}
           </p>
         </div>
 

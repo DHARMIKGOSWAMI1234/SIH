@@ -34,6 +34,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: ListView(
         padding: const EdgeInsets.all(24.0),
         children: [
+          Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24.0),
+              child: Image.asset(
+                'assets/branding/bandhu_logo.png',
+                width: 130.0,
+                height: 130.0,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16.0),
           const Text(
             'Let’s make this comfortable for you',
             style: TextStyle(

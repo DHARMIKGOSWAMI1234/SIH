@@ -5,7 +5,7 @@ from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "SMRITI Backend API"
+    PROJECT_NAME: str = "BANDHU Backend API"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
     
